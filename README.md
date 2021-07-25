@@ -1,24 +1,40 @@
 # Project Setup
-Before project setup make sure you have python>=3.8 and node>=12
-- First Clone the repo with HTTP link
+### Before project setup make sure you have python>=3.8 and node>=12
+- First clone the repo with HTTP link
 - Now run all this in terminal
-    - `pip install pre-commit`
-    - `pip install virtualenv`
-    - `npm install -g @arkweid/lefthook`
+    - pip install pre-commit
+    - pip install virtualenv
+    - npm install -g @arkweid/lefthook
+- Create `.env` file inside `e-kart/backend/backend/` folder with following variables
+<pre>
+SECRET_KEY=django-insecure-dac#922sg-az=_h(z)yd3g$vbqyhaqzp#7$p5m-bft#*&q=*3q
+DEBUG=True
+FRONTEND_URL=http://localhost:3000
+ALLOWED_HOSTS="localhost,127.0.0.1"
+</pre>
+- Create `.env.development.local` file inside `e-kart/frontend` folder with following variable
+<pre>
+REACT_APP_BACKEND_URL=http://localhost:8000
+</pre>
 - Navigate to project folder using Terminal / CMD
-- Go inside frontend run `npm install`,  it takes time to install all packages
-- Till then open another terminal and navigate to backend folder and follow below steps
-    - run `virtualenv env` this will create virtual environment for our project
-    - now activate `env`
-        - windows: env\Scripts\activate
-        - Linux / MacOS: env/bin/activate
+- run `virtualenv env` this will create virtual environment for our project
+- Now activate `env`
+    - Windows: env\Scripts\activate
+    - Linux / MacOS: env/bin/activate
+- To setup `Backend Server` follow below steps
+    - navigate to backend folder from terminal using `cd backend`
     - run `pip install -r requirements.txt`
-    - to create database execute this `python manage.py migrate`
+    - to create database execute this commands
+        - `python manage.py makemigrations`
+        - `python manage.py migrate`
     - start backend server using `python manage.py runserver`
-    - Now close backend terminal, let's go back to frontend terminal
-- Now our all frontend packages are installed, if not wait for sometime, npm takes time to install packages
-- run `lefthook install`, make sure you are in frontend folder
-- Start frontend server using `npm run start`
+- To setup `Frontend Server` follow below steps
+    - navigate to `frontend folder` using `cd ../frontend`
+    - run `npm install`,  it takes time to install all packages
+    - Now our all frontend packages are installed, if not wait for sometime, npm takes time to install packages
+    - run `lefthook install`
+    - Start frontend server using `npm run start`
 - Now both the server are running, verify with below links
     - Backend Server: http://localhost:8000
     - Frontend Server: http://localhost:3000
+### Note: Make sure you run all commands from `8th points (Backend setup)` after every pull
