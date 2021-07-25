@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+import os
+import re
+import sys
+
+valid_branch_regex = r"^(feature|bugfix|improvement|hotfix)\/\d+-[a-z0-9._-]+$"
+
+invalid_branch_name_msg = (
+    "*" * 40
+    + """
+Change your branch name
+Branch name examples:
+<feature|improvement|bugfix|hotfix>/<issue-id>-<issue-desc>
+feature/1-description
+bugfix/1-description
+"""
+    + "*" * 40
+)
+
+
+def main():
+    branch_name = os.popen("git branch --show-current").read()
+    if bool(re.match(valid_branch_regex, branch_name)):
+        return 0
+    sys.stdout.write(invalid_branch_name_msg)
+    return 1
+
+
+if __name__ == "__main__":
+    exit(main())
