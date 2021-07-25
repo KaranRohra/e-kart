@@ -1,0 +1,23 @@
+pre-commit:
+  parallel: true
+  commands:
+    # running_test:
+    #   run: "python manage.py test"
+    backend_lint:
+      run: "pre-commit run --all-files"
+    frontend_lint:
+      root: "frontend/"
+      run: "npm run lint:fix"
+    format_frontend:
+      root: "frontend/"
+      run: "npm run format"
+  scripts:
+    "start.py":
+      runner: python
+
+commit-msg:
+  scripts:
+    "gitlab_issue_id":
+      runner: python
+    "branch_name":
+      runner: python
