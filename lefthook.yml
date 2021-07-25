@@ -11,6 +11,9 @@ pre-commit:
     format_frontend:
       root: "frontend/"
       run: "npm run format"
+  scripts:
+    "start.py":
+      runner: python
 
 commit-msg:
   scripts:
