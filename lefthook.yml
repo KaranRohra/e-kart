@@ -11,9 +11,7 @@ pre-commit:
     format_frontend:
       root: "frontend/"
       run: "npm run format"
-  scripts:
-    "good_job.js":
-      runner: node
+
 commit-msg:
   scripts:
     "gitlab_issue_id":

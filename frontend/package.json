@@ -26,6 +26,10 @@
             "react-app/jest"
         ]
     },
+    "eslintIgnore": [
+        "node_modules",
+        "build/*"
+    ],
     "browserslist": {
         "production": [
             ">0.2%",
@@ -41,6 +45,7 @@
     "devDependencies": {
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^3.4.0",
+        "eslint": "^7.31.0",
         "prettier": "^2.3.2"
     }
 }
