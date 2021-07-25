@@ -1,6 +1,6 @@
 # Project Setup
 ### Before project setup make sure you have python>=3.8 and node>=12
-- First clone the repo with HTTP link
+- First clone the repo at your desire location, using `git clone https://github.com/KaranRohra/e-kart.git`
 - Now run all this in terminal
     - pip install pre-commit
     - pip install virtualenv
