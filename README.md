@@ -41,6 +41,6 @@ REACT_APP_BACKEND_URL=http://localhost:8000
 - Before starting the servers make sure you have activated `env`
 - Always run backend server from `e-kart/backend` folder, using `python manage.py runserver` command
 - Always run frontend server from `e-kart/frontend` folder, using `npm run start` command
-- Make sure you run all commands from `8th point (Backend setup)` after every pull
-- Make sure you all commands from `project directory only`
+- Make sure you run all commands from `Backend setup point` after every pull
+- Make sure you run all commands from `project directory only`
 - Follow steps in `listed order only`
