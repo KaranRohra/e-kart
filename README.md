@@ -21,6 +21,7 @@ REACT_APP_BACKEND_URL=http://localhost:8000
 - Now activate `env`
     - Windows: `env/Scripts/activate` or `env\Scripts\activate`
     - Linux / MacOS: `source env/bin/activate`
+- Now run `lefthook install`
 - To setup `Backend Server` follow below steps
     - navigate to backend folder from terminal using `cd backend`
     - run `pip install -r requirements.txt`
@@ -32,7 +33,6 @@ REACT_APP_BACKEND_URL=http://localhost:8000
     - navigate to `frontend folder` using `cd ../frontend`
     - run `npm install`, it takes time to install all packages
     - now our all frontend packages are installed, if not wait for sometime, npm takes time to install packages
-    - run `lefthook install`
     - start frontend server using `npm run start`
 - Now both the server are running, verify with below links
     - Backend Server: http://localhost:8000
@@ -42,3 +42,5 @@ REACT_APP_BACKEND_URL=http://localhost:8000
 - Always run backend server from `e-kart/backend` folder, using `python manage.py runserver` command
 - Always run frontend server from `e-kart/frontend` folder, using `npm run start` command
 - Make sure you run all commands from `8th point (Backend setup)` after every pull
+- Make sure you all commands from `project directory only`
+- Follow steps in `listed order only`
