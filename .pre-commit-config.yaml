@@ -1,6 +1,7 @@
 default_language_version:
   # default language version for each language
   python: python3.9
+files: '\.py$'
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
