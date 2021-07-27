@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, AppBar, Toolbar, makeStyles, withStyles, Link } from "@material-ui/core";
+import { Box, AppBar, Toolbar, makeStyles, withStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import HeaderButtons from "./HeaderButtons";
 import header_logo from "../../assets/header_logo.png";
@@ -39,8 +40,8 @@ function Header() {
             <AppBar className={classes.header}>
                 <ToolBar>
                     <Box className={classes.wrapper}>
-                        <Link href="#">
-                            <img className={classes.headerLogo} src={header_logo} alt="" />
+                        <Link to="/">
+                            <img className={classes.headerLogo} src={header_logo} alt="E-Kart" />
                         </Link>
                         <SearchBar />
                         <HeaderButtons />

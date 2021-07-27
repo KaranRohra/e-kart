@@ -1,7 +1,8 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Box, Grid, Button, makeStyles, Badge } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
-import { themeColor } from "../colors";
+import { themeColor } from "../../constants/colors";
 
 const useStyles = makeStyles((theme) => ({
     login: {
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 function HeaderButtons() {
     const classes = useStyles();
+    const history = useHistory();
     return (
         <Box className={classes.wrapper}>
             <Grid container justifyContent="center" alignItems="center" spacing={5}>
@@ -56,6 +58,7 @@ function HeaderButtons() {
                             </Badge>
                         }
                         className={classes.cart}
+                        onClick={() => history.push("/cart")}
                     >
                         Cart
                     </Button>
