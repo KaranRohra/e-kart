@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOWED_ORIGINS = [
     env("FRONTEND_URL"),
 ]
+
+# overridden django user table
+AUTH_USER_MODEL = "accounts.User"

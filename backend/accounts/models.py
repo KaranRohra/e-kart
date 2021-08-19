@@ -1,0 +1,33 @@
+from django.contrib.auth import models as auth_models
+from django.db import models
+
+
+class User(auth_models.AbstractUser):
+    email = models.EmailField(max_length=254, unique=True)
+    USERNAME_FIELD = "email"
+    username = None
+    REQUIRED_FIELDS = []
+
+
+class Address(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    address_line: models.TextField()
+    city = models.CharField(max_length=70)
+    state = models.CharField(max_length=70)
+    country = models.CharField(max_length=70)
+    pincode = models.IntegerField()
+    name = models.CharField(max_length=70)
+    landmark = models.CharField(max_length=50)
+    phone_number_1 = models.CharField(max_length=10)
+    phone_number_2 = models.IntegerField(max_length=10, null=True)
+
+
+class Interest(models.Model):
+    list_of_interest = [
+        ("Music", "Music"),
+        ("Movies", "Movies"),
+        ("Gaming", "Gaming"),
+        ("Coding", "Coding"),
+    ]
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    interest = models.CharField(max_length=90, choices=list_of_interest)
