@@ -28,3 +28,6 @@ yarn-error.log*
 
 # Ignore cache files
 __pycache__/
+
+# Ignore expirement folder
+expirement/
