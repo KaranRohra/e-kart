@@ -1,15 +1,19 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Cart from "./components/cart/Cart";
-import Header from "./components/header/Header";
-import Home from "./components/home/Home";
+import ChangePassword from "./components/accounts/ChangePassword";
+import ForgotPassword from "./components/accounts/ForgotPassword";
+import Login from "./components/accounts/Login";
+import NavBar from "./components/header/Header";
 
 function App() {
     return (
         <Router>
-            <Header />
             <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/cart" component={Cart} />
+                <Route exact path="/">
+                    <NavBar />
+                </Route>
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/forgot-password" component={ForgotPassword} />
+                <Route exact path="/change-password" component={ChangePassword} />
             </Switch>
         </Router>
     );
