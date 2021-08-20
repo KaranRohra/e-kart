@@ -1,4 +1,4 @@
-list_of_interest = [
+LIST_OF_INTEREST = [
     ("Music", "Music"),
     ("Movies", "Movies"),
     ("Gaming", "Gaming"),
