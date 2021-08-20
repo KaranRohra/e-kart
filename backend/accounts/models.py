@@ -8,6 +8,7 @@ class User(auth_models.AbstractUser):
     USERNAME_FIELD = "email"
     username = None
     REQUIRED_FIELDS = []
+    is_process_completed = models.BooleanField(default=False)
 
 
 class Address(models.Model):
@@ -25,5 +26,8 @@ class Address(models.Model):
 
 
 class Interest(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="interests")
     interest = models.CharField(max_length=90, choices=constants.LIST_OF_INTEREST)
+
+    def __str__(self):
+        return self.interest

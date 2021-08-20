@@ -24,3 +24,8 @@ class UserAdmin(admin.ModelAdmin):
         ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
     search_fields = ("email", "first_name", "last_name")
+
+
+@admin.register(models.Interest)
+class InterestAdmin(admin.ModelAdmin):
+    list_display = ["user", "interest"]
