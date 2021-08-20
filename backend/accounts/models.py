@@ -12,7 +12,8 @@ class User(auth_models.AbstractUser):
 
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    address_line = models.TextField()
+    address_line_1 = models.TextField()
+    address_line_2 = models.TextField()
     city = models.CharField(max_length=70)
     state = models.CharField(max_length=70)
     country = models.CharField(max_length=70)
@@ -24,6 +25,5 @@ class Address(models.Model):
 
 
 class Interest(models.Model):
-
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    interest = models.CharField(max_length=90, choices=constants.list_of_interest)
+    interest = models.CharField(max_length=90, choices=constants.LIST_OF_INTEREST)
