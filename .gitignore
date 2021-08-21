@@ -1,8 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-frontend/node_modules/
-/.pnp
+node_modules/
+.pnp
 .pnp.js
 
 # testing
@@ -29,5 +29,5 @@ yarn-error.log*
 # Ignore cache files
 __pycache__/
 
-# Ignore expirement folder
-expirement/
+# Ignore experiments folder
+experiments/
