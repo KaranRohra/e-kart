@@ -10,11 +10,20 @@ function BaseForm(props) {
             <Row>
                 <Col md={{ offset: 3, span: 7 }} lg={{ offset: 4, span: 5 }} xl={{ offset: 4, span: 4 }}>
                     <Image src={fullLogo} fluid className="ps-lg-4 ms-5" />
-                    <Form className="mt-3">
+                    <Form className="mt-3" onSubmit={props.handleSubmit}>
                         {!props.hideEmailField && (
                             <Form.Group className="mb-3">
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" required />
+                                <Form.Control
+                                    onChange={(e) => props.setData({ ...props.data, email: e.target.value })}
+                                    defaultValue={props.data.email || ""}
+                                    type="email"
+                                    placeholder="Enter email"
+                                    name="email"
+                                    isInvalid={props.error.email}
+                                    required
+                                />
+                                <Form.Control.Feedback type="invalid">{props.error.email}</Form.Control.Feedback>
                             </Form.Group>
                         )}
 
@@ -23,10 +32,15 @@ function BaseForm(props) {
                                 <Form.Group className="mb-3">
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control
+                                        onChange={(e) => props.setData({ ...props.data, password: e.target.value })}
+                                        defaultValue={props.data.password || ""}
                                         type={showPassword ? "text" : "password"}
                                         placeholder="Enter password"
+                                        name="password"
+                                        isInvalid={props.error.password}
                                         required
                                     />
+                                    <Form.Control.Feedback type="invalid">{props.error.password}</Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Check
