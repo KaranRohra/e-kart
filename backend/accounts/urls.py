@@ -6,4 +6,5 @@ urlpatterns = [
     path("login/", rest_framework_views.obtain_auth_token, name="login"),
     path("register/", views.RegisterAPI.as_view(), name="register"),
     path("send-otp/", views.send_email_to_user, name="send-otp"),
+    path("user/", views.UserDetailsAPI.as_view(), name="user"),
 ]
