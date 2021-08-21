@@ -24,3 +24,27 @@ class UserAdmin(admin.ModelAdmin):
         ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
     search_fields = ("email", "first_name", "last_name")
+
+
+@admin.register(models.Address)
+class AddressAdmin(admin.ModelAdmin):
+    list_display = ("id", "user")
+    search_fields = ("email", "name")
+    fieldsets = (
+        ("Personal info", {"fields": ("user", "name")}),
+        (
+            "Address Details",
+            {
+                "fields": (
+                    "address_line_1",
+                    "address_line_2",
+                    "city",
+                    "state",
+                    "landmark",
+                    "pincode",
+                ),
+            },
+        ),
+        ("Conctact Info", {"fields": ("phone_number_1", "phone_number_2")}),
+        ("Delete Address", {"fields": ("is_deleted",)}),
+    )
