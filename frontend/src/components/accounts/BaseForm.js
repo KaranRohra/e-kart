@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Form, Col, Row, Image } from "react-bootstrap";
-import fullLogo from "../../static/images/full-logo.png";
+import fullLogo from "static/images/full-logo.png";
 
 function BaseForm(props) {
     const [showPassword, setShowPassword] = React.useState(false);

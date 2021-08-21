@@ -1,8 +1,8 @@
 import React from "react";
 import { Navbar, Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import LeftHeader from "./LeftHeader";
-import RightHeader from "./RightHeader";
+import LeftHeader from "components/header/LeftHeader";
+import RightHeader from "components/header/RightHeader";
 
 function Header() {
     const history = useHistory();

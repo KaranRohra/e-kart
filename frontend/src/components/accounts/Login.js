@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import BaseForm from "./BaseForm";
+import BaseForm from "components/accounts/BaseForm";
 
 function Login() {
     const history = useHistory();

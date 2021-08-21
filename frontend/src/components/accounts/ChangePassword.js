@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import BaseForm from "./BaseForm";
+import BaseForm from "components/accounts/BaseForm";
 
 function ChangePassword() {
     const history = useHistory();
