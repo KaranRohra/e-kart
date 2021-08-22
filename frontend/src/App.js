@@ -17,9 +17,12 @@ function App() {
                 </Route>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
-
                 <Route exact path="/forgot-password" component={ForgotPassword} />
-                <Route exact path="/change-password" component={ChangePassword} />
+                <Route exact path="/reset-password" component={ChangePassword} />
+
+                <Route path="/">
+                    <NavBar />
+                </Route>
             </Switch>
         </Router>
     );

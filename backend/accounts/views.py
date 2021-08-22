@@ -1,11 +1,11 @@
-import random
-
 from accounts import models
 from accounts import serializers
+from django.conf import settings
 from django.http import JsonResponse
 from rest_framework import authentication
 from rest_framework import generics
 from rest_framework import permissions
+from rest_framework import status
 from rest_framework import views
 
 
@@ -14,7 +14,7 @@ class RegisterAPI(generics.CreateAPIView):
     queryset = models.User.objects.all()
 
 
-class UserDetailsAPI(views.APIView):
+class UserAPI(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (authentication.TokenAuthentication,)
 
@@ -22,19 +22,28 @@ class UserDetailsAPI(views.APIView):
         serializer = serializers.UserSeraliser(request.user)
         return JsonResponse(serializer.data)
 
+    def patch(self, request, *args, **kwargs):
+        user = serializers.UserSeraliser(instance=request.user, data=request.data, partial=True)
+        if user.is_valid():
+            user.save()
+            return self.get(request)
+        return JsonResponse(user.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def generate_otp():
-    return "".join([str(random.randint(0, 9)) for _ in range(6)])
 
-
-def send_email_to_user(request):
+def send_reset_link_api(request):
     try:
-        otp = generate_otp()
         user = models.User.objects.get(email=request.GET["email"])
-        user.email_user(subject="E-kart OTP", message=f"Your OTP is: {otp}")
+        user.email_user(
+            subject="E-kart OTP",
+            message=f"""
+            Your Reset Link
+            {settings.CORS_ALLOWED_ORIGINS[0]}/reset-password/?token={user.auth_token}
+            Don't share this link with anyone.
+            Don't reply to this email.
+            """,
+        )
         response = {
             "status": "success",
-            "otp": otp,
         }
     except Exception as e:
         response = {

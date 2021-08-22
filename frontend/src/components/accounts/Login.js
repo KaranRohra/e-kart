@@ -2,13 +2,13 @@ import React from "react";
 import { Link, useHistory, Redirect } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import BaseForm from "components/accounts/BaseForm";
-import { authenticateUserAPI } from "services/apis/accounts";
+import { authenticateUserAPI, isUserAuthenticated } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import Cookies from "universal-cookie";
 
 function Login() {
     const [loading, setLoading] = React.useState(false);
-    const [error, setError] = React.useState({});
+    const [alert, setAlert] = React.useState({});
     const [data, setData] = React.useState({
         email: "",
         password: "",
@@ -16,7 +16,7 @@ function Login() {
     const history = useHistory();
     const cookies = new Cookies();
 
-    if (cookies.get("token")) {
+    if (isUserAuthenticated()) {
         return <Redirect to="/" />;
     }
 
@@ -30,9 +30,9 @@ function Login() {
                 history.push("/");
                 return;
             } else {
-                setError({
-                    email: "Account does not exist with this email",
-                    password: "or Password is incorrect",
+                setAlert({
+                    type: "danger",
+                    message: "Account does not exist or wrong password",
                 });
             }
             setLoading(false);
@@ -46,7 +46,7 @@ function Login() {
             {loading ? (
                 <BoxSpinner message="Logging in..." />
             ) : (
-                <BaseForm data={data} setData={setData} handleSubmit={handleSubmit} error={error}>
+                <BaseForm data={data} setData={setData} handleSubmit={handleSubmit} alert={alert}>
                     <Button style={{ width: "100%" }} variant="primary" type="submit">
                         Sign In
                     </Button>

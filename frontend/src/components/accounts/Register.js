@@ -1,28 +1,26 @@
 import React from "react";
-import Cookies from "universal-cookie";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { Link, useHistory, Redirect } from "react-router-dom";
 import BaseForm from "components/accounts/BaseForm";
-import { createUserAPI } from "services/apis/accounts";
+import { createUserAPI, isUserAuthenticated } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 
 function Register() {
     const [loading, setLoading] = React.useState(false);
-    const [error, setError] = React.useState({});
+    const [alert, setAlert] = React.useState({});
     const [data, setData] = React.useState({});
     const history = useHistory();
-    const cookies = new Cookies();
 
-    if (cookies.get("token")) {
+    if (isUserAuthenticated()) {
         return <Redirect to="/" />;
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if (data.password.length < 6) {
-            setError({
-                ...error,
-                password: "Password must be at least 6 characters long",
+            setAlert({
+                type: "warning",
+                message: "Password must be at least 6 characters long",
             });
             return;
         }
@@ -33,8 +31,9 @@ function Register() {
                 history.push("/login");
                 return;
             } else {
-                setError({
-                    email: response.error.email[0],
+                setAlert({
+                    type: "danger",
+                    message: "Account with this email already exists",
                 });
             }
             setLoading(false);
@@ -48,7 +47,7 @@ function Register() {
             {loading ? (
                 <BoxSpinner message="Creating your account..." />
             ) : (
-                <BaseForm data={data} setData={setData} handleSubmit={handleSubmit} error={error}>
+                <BaseForm data={data} setData={setData} handleSubmit={handleSubmit} alert={alert}>
                     <Row className="mb-3">
                         <Form.Group as={Col}>
                             <Form.Label>First Name</Form.Label>

@@ -1,16 +1,17 @@
 import React from "react";
-import { Container, Form, Col, Row, Image } from "react-bootstrap";
+import { Container, Form, Col, Row, Image, Alert } from "react-bootstrap";
 import fullLogo from "static/images/full-logo.png";
 
 function BaseForm(props) {
     const [showPassword, setShowPassword] = React.useState(false);
 
     return (
-        <Container className="p-5 mt-5">
+        <Container className="p-5">
             <Row>
                 <Col md={{ offset: 3, span: 7 }} lg={{ offset: 4, span: 5 }} xl={{ offset: 4, span: 4 }}>
                     <Image src={fullLogo} fluid className="ps-lg-4 ms-5" />
                     <Form className="mt-3" onSubmit={props.handleSubmit}>
+                        <Alert variant={props.alert.type}>{props.alert.message}</Alert>
                         {!props.hideEmailField && (
                             <Form.Group className="mb-3">
                                 <Form.Label>Email address</Form.Label>
@@ -20,10 +21,8 @@ function BaseForm(props) {
                                     type="email"
                                     placeholder="Enter email"
                                     name="email"
-                                    isInvalid={props.error.email}
                                     required
                                 />
-                                <Form.Control.Feedback type="invalid">{props.error.email}</Form.Control.Feedback>
                             </Form.Group>
                         )}
 
@@ -37,10 +36,8 @@ function BaseForm(props) {
                                         type={showPassword ? "text" : "password"}
                                         placeholder="Enter password"
                                         name="password"
-                                        isInvalid={props.error.password}
                                         required
                                     />
-                                    <Form.Control.Feedback type="invalid">{props.error.password}</Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Check
