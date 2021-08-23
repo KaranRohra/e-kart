@@ -1,8 +1,8 @@
 import React from "react";
-import { Link, useHistory, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import BaseForm from "components/accounts/BaseForm";
-import { authenticateUserAPI, isUserAuthenticated } from "services/apis/accounts";
+import { authenticateUserAPI } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import Cookies from "universal-cookie";
 
@@ -15,10 +15,6 @@ function Login() {
     });
     const history = useHistory();
     const cookies = new Cookies();
-
-    if (isUserAuthenticated()) {
-        return <Redirect to="/" />;
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();

@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { Link, useHistory, Redirect } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import BaseForm from "components/accounts/BaseForm";
-import { createUserAPI, isUserAuthenticated } from "services/apis/accounts";
+import { createUserAPI } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 
 function Register() {
@@ -10,10 +10,6 @@ function Register() {
     const [alert, setAlert] = React.useState({});
     const [data, setData] = React.useState({});
     const history = useHistory();
-
-    if (isUserAuthenticated()) {
-        return <Redirect to="/" />;
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();

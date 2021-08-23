@@ -1,8 +1,8 @@
 import React from "react";
 import { Alert, Button, Container } from "react-bootstrap";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import BaseForm from "components/accounts/BaseForm";
-import { isUserAuthenticated, sendPasswordResetLinkAPI } from "services/apis/accounts";
+import { sendPasswordResetLinkAPI } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 
 function ForgotPassword() {
@@ -11,10 +11,6 @@ function ForgotPassword() {
     const [alert, setAlert] = React.useState({});
     const [success, setSuccess] = React.useState(false);
     const history = useHistory();
-
-    if (isUserAuthenticated()) {
-        return <Redirect to="/" />;
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();

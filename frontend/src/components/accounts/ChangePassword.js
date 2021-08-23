@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import BaseForm from "components/accounts/BaseForm";
-import { isUserAuthenticated, updateUserAPI } from "services/apis/accounts";
+import { updateUserAPI } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 
 function ChangePassword(props) {
@@ -12,10 +12,6 @@ function ChangePassword(props) {
     const [alert, setAlert] = React.useState({});
     const history = useHistory();
     const token = props.location.search.slice(7);
-
-    if (isUserAuthenticated()) {
-        return <Redirect to="/" />;
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();

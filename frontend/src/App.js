@@ -1,27 +1,23 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ChangePassword from "components/accounts/ChangePassword";
-import ForgotPassword from "components/accounts/ForgotPassword";
-import Login from "components/accounts/Login";
-import Register from "components/accounts/Register";
-import NavBar from "components/header/Header";
-import Home from "components/home/Home";
+import PageNotFound from "components/common/404/PageNotFound";
+import routes from "routes";
 
 function App() {
+    // TODO Re render after sign out, solution use cookies in state
     return (
         <Router>
             <Switch>
-                <Route exact path="/">
-                    <NavBar />
-                    <Home />
-                </Route>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/forgot-password" component={ForgotPassword} />
-                <Route exact path="/reset-password" component={ChangePassword} />
+                {routes.map((route, i) => (
+                    <Route exact path={route.path} key={i}>
+                        {route.components.map((component, j) => (
+                            <React.Fragment key={j}>{component}</React.Fragment>
+                        ))}
+                    </Route>
+                ))}
 
                 <Route path="/">
-                    <NavBar />
+                    <PageNotFound />
                 </Route>
             </Switch>
         </Router>
