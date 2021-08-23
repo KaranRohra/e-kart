@@ -5,8 +5,11 @@ import BaseForm from "components/accounts/BaseForm";
 import { authenticateUserAPI } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import Cookies from "universal-cookie";
+import { Context } from "App";
+import { setCookie } from "services/actions/accounts";
 
 function Login() {
+    const context = React.useContext(Context);
     const [loading, setLoading] = React.useState(false);
     const [alert, setAlert] = React.useState({});
     const [data, setData] = React.useState({
@@ -23,6 +26,7 @@ function Login() {
             const response = await authenticateUserAPI(data);
             if (response.status === 200) {
                 cookies.set("token", response.data.token);
+                context.dispatch(setCookie({ token: response.data.token }));
                 history.push("/");
                 return;
             } else {

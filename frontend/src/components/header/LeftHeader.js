@@ -3,35 +3,44 @@ import Cookies from "universal-cookie";
 import { useHistory } from "react-router-dom";
 import { Nav, NavDropdown } from "react-bootstrap";
 import { getUserAPI } from "services/apis/accounts";
+import { Context } from "App";
+import { setCookie, setUser } from "services/actions/accounts";
 
 function LeftHeader() {
     const [loading, setLoading] = React.useState(true);
-    const [data, setData] = React.useState(null);
+    const { state, dispatch } = React.useContext(Context);
     const history = useHistory();
     const cookies = new Cookies();
+
+    const userIsEmpty = Object.keys(state.user).length === 0;
 
     React.useEffect(() => {
         const callAPI = async () => {
             const response = await getUserAPI();
             if (response.status === 200) {
-                setData(response.data);
+                dispatch(setUser(response.data));
             }
             setLoading(false);
         };
-        callAPI();
-    }, []);
+        if (userIsEmpty) {
+            callAPI();
+        } else {
+            setLoading(false);
+        }
+    }, [userIsEmpty, dispatch]);
 
     const handleSignOut = () => {
         cookies.remove("token");
-        setData(null);
+        dispatch(setCookie({}));
+        dispatch(setUser({}));
     };
 
     return (
         <Nav className="me-auto">
             <Nav.Link onClick={() => history.push("/")}>Home</Nav.Link>
             {!loading &&
-                (data ? (
-                    <NavDropdown title={data.first_name}>
+                (!userIsEmpty ? (
+                    <NavDropdown title={state.user.first_name}>
                         <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                         <NavDropdown.Item href="/orders">Orders</NavDropdown.Item>
                         <NavDropdown.Item href="/wishlist">Wishlist</NavDropdown.Item>
@@ -39,10 +48,10 @@ function LeftHeader() {
                         <NavDropdown.Item onClick={handleSignOut}>Sign out</NavDropdown.Item>
                     </NavDropdown>
                 ) : (
-                    <Nav.Link onClick={() => history.push("/login")}>Login</Nav.Link>
+                    <Nav.Link href="/login">Login</Nav.Link>
                 ))}
         </Nav>
     );
 }
 
-export default LeftHeader;
+export default React.memo(LeftHeader);

@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 
 function ProductCard({ product }) {
     return (
-        <Card style={{ width: "18rem" }} className="m-1">
+        <Card style={{ width: "18rem" }} className="m-2">
             <div style={{ width: 286, height: 180 }} className="border border-dark">
                 <Card.Img
                     style={{ width: "100%", height: "100%", objectFit: "contain" }}
