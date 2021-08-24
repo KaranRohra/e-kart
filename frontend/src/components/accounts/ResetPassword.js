@@ -1,17 +1,18 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import BaseForm from "components/accounts/BaseForm";
 import { updateUserAPI } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
+import queryString from "query-string";
 
-function ChangePassword(props) {
+function ResetPassword() {
     const [loading, setLoading] = React.useState(false);
     const [data, setData] = React.useState({});
     const [error, setError] = React.useState({});
     const [alert, setAlert] = React.useState({});
     const history = useHistory();
-    const token = props.location.search.slice(7);
+    const { token } = queryString.parse(useLocation().search);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -91,4 +92,4 @@ function ChangePassword(props) {
     );
 }
 
-export default ChangePassword;
+export default ResetPassword;

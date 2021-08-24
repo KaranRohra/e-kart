@@ -1,4 +1,4 @@
-import ChangePassword from "components/accounts/ChangePassword";
+import ChangePassword from "components/accounts/ResetPassword";
 import ForgotPassword from "components/accounts/ForgotPassword";
 import Login from "components/accounts/Login";
 import Register from "components/accounts/Register";
@@ -8,7 +8,7 @@ import { isUserAuthenticated } from "services/apis/accounts";
 
 const homeRoute = {
     path: "/",
-    components: [<Header key="header" />, <Home key="home" />],
+    components: [<Header />, <Home />],
 };
 
 const securedRoutes = [];
@@ -16,19 +16,19 @@ const securedRoutes = [];
 const unsecuredRoutes = [
     {
         path: "/login",
-        components: [<Login key="login" />],
+        components: [<Login />],
     },
     {
         path: "/register",
-        components: [<Register key="register" />],
+        components: [<Register />],
     },
     {
         path: "/forgot-password",
-        components: [<ForgotPassword key="forgot-password" />],
+        components: [<ForgotPassword />],
     },
     {
-        path: "/change-password",
-        components: [<ChangePassword key="change-password" />],
+        path: "/reset-password",
+        components: [<ChangePassword key="reset-password" />],
     },
 ];
 
