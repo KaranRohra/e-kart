@@ -25,5 +25,9 @@ urlpatterns = [
     path("accounts/", include("accounts.urls"), name="accounts"),
 ]
 
+# Url for files
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# MEDIA URL - /media/
+# document_root - where to store the file.
