@@ -21,13 +21,17 @@ class ProductImage(models.Model):
 
 class SpecificationTitle(models.Model):
     title = models.CharField(max_length=90)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="specification_titles", related_query_name="specification_title")
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="specification_titles", related_query_name="specification_title"
+    )
 
 
 class Specification(models.Model):
     name = models.CharField(max_length=90)
     value = models.CharField(max_length=90)
-    specification_title = models.ForeignKey(SpecificationTitle, on_delete=models.CASCADE, related_name="specifications", related_query_name="specification")
+    specification_title = models.ForeignKey(
+        SpecificationTitle, on_delete=models.CASCADE, related_name="specifications", related_query_name="specification"
+    )
 
 
 class RatingAndReview(models.Model):
@@ -35,7 +39,9 @@ class RatingAndReview(models.Model):
     description = models.TextField()
     title = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="review_and_ratings", related_query_name="rating_and_review")
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="review_and_ratings", related_query_name="rating_and_review"
+    )
 
 
 class WishList(models.Model):
