@@ -25,7 +25,8 @@ class SpecificationTitle(models.Model):
 
 
 class Specification(models.Model):
-    content = models.JSONField()
+    name = models.CharField(max_length=90)
+    value = models.CharField(max_length=90)
     specification_title = models.ForeignKey(SpecificationTitle, on_delete=models.CASCADE)
 
 
