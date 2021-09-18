@@ -2,7 +2,7 @@ from accounts import models
 from rest_framework import serializers
 
 
-class UserSeraliser(serializers.ModelSerializer):
+class UserSerializers(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     def create(self, validated_data):
@@ -16,7 +16,7 @@ class UserSeraliser(serializers.ModelSerializer):
         fields = ("id", "first_name", "last_name", "email", "password", "phone_number")
 
 
-class AddressSeraliser(serializers.ModelSerializer):
+class AddressSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Address
         fields = "__all__"

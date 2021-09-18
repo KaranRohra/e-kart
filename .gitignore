@@ -29,3 +29,10 @@ yarn-error.log*
 
 # Ignore cache files
 __pycache__/
+
+# Ignore media folder
+media/
+
+# Ignore IDE Folders
+.idea/
+.vscode/

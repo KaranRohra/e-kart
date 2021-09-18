@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "accounts",
+    "products",
 ]
 
 MIDDLEWARE = [
@@ -151,3 +152,8 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+
+
+# File Uploading
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
