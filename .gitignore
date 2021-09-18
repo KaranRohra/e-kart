@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 frontend/node_modules/
 /.pnp
@@ -31,3 +29,10 @@ __pycache__/
 
 # Ignore experiments folder
 experiments/
+
+# Ignore media folder
+media/
+
+# Ignore IDE Folders
+.idea/
+.vscode/

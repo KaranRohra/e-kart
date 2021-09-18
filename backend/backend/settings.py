@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
+    "rest_framework.authtoken",
+    "accounts",
+    "products",
 ]
 
 MIDDLEWARE = [
@@ -138,3 +141,19 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOWED_ORIGINS = [
     env("FRONTEND_URL"),
 ]
+
+# overridden django user table
+AUTH_USER_MODEL = "accounts.User"
+
+# Email information
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+
+
+# File Uploading
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
