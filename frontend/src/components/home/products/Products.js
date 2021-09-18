@@ -1,8 +1,8 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { products } from "./dummyProductsData";
-import ProductCard from "./ProductCard";
-import ProductCarousel from "./ProductCarousel";
+import { products } from "components/home/products/dummyProductsData";
+import ProductCard from "components/home/products/ProductCard";
+import ProductCarousel from "components/home/products/ProductCarousel";
 
 function Products() {
     const coronaURL = "https://rukminim1.flixcart.com/flap/3006/433/image/4789bc3aefd54494.jpg?q=50";

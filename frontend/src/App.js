@@ -11,6 +11,7 @@ import ResetPassword from "components/accounts/ResetPassword";
 import ForgotPassword from "components/accounts/ForgotPassword";
 import Login from "components/accounts/Login";
 import Register from "components/accounts/Register";
+import Cart from "components/cart/Cart";
 
 // ******** Routes ********
 import PrivateRoute from "routes/PrivateRoute";
@@ -28,6 +29,7 @@ const initialState = {
 
 function App() {
     const [state, dispatch] = React.useReducer(reducer, initialState);
+    document.body.style.backgroundColor = "#f5f5f5";
 
     return (
         <Context.Provider value={{ state: state, dispatch: dispatch }}>
@@ -47,6 +49,7 @@ function App() {
 
                     {/* ******** Private Routes ********  */}
                     <PrivateRoute exact path="/profile" component={Profile} />
+                    <Route exact path="/cart" component={Cart} />
 
                     {/* ******** Not Found Route ********  */}
                     <Route path="*" component={PageNotFound} />
