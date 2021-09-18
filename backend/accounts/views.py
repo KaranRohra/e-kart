@@ -11,7 +11,7 @@ from rest_framework.response import Response
 
 
 class RegisterAPI(generics.CreateAPIView):
-    serializer_class = serializers.UserSeraliser
+    serializer_class = serializers.UserSerializers
     queryset = models.User.objects.all()
 
 
@@ -20,7 +20,7 @@ class UserAPI(views.APIView):
     authentication_classes = (authentication.TokenAuthentication,)
 
     def get(self, request):
-        serializer = serializers.UserSeraliser(request.user)
+        serializer = serializers.UserSerializers(request.user)
         return Response(serializer.data)
 
     def patch(self, request, *args, **kwargs):
@@ -29,7 +29,7 @@ class UserAPI(views.APIView):
         if password:
             request.user.set_password(password[0])
 
-        user = serializers.UserSeraliser(instance=request.user, data=request.data, partial=True)
+        user = serializers.UserSerializers(instance=request.user, data=request.data, partial=True)
         if user.is_valid():
             user.save()
             return self.get(request)
@@ -63,7 +63,7 @@ class AddressAPI(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (authentication.TokenAuthentication,)
     queryset = models.Address.objects.all()
-    serializer_class = serializers.AddressSeraliser
+    serializer_class = serializers.AddressSerializers
 
     def get_queryset(self):
         return models.Address.objects.filter(user=self.request.user)

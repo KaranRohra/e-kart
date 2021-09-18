@@ -62,6 +62,7 @@ class Specification(models.Model):
 
 
 class RatingAndReview(models.Model):
+    related_name, related_query_name = "ratings_and_reviews", "rating_and_review"
     likes = models.PositiveIntegerField()
     dislikes = models.PositiveIntegerField()
     stars = models.PositiveIntegerField()
@@ -69,7 +70,10 @@ class RatingAndReview(models.Model):
     title = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
     product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="reviews_and_ratings", related_query_name="review_and_rating"
+        Product, on_delete=models.CASCADE, related_name=related_name, related_query_name=related_query_name
+    )
+    user = models.ForeignKey(
+        accounts_models.User, on_delete=models.CASCADE, related_name=related_name, related_query_name=related_query_name
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -80,7 +84,9 @@ class RatingAndReview(models.Model):
 
 class WishList(models.Model):
     product = models.ManyToManyField(Product)
-    user = models.OneToOneField(accounts_models.User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        accounts_models.User, on_delete=models.CASCADE, related_name="wishlist", related_query_name="wishlist"
+    )
 
     def __str__(self):
         return f"{self.id} __ {self.user}"
