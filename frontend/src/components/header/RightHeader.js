@@ -1,6 +1,5 @@
 import React from "react";
 import { Nav, Badge, FormControl, Button } from "react-bootstrap";
-import * as Icon from "react-bootstrap-icons";
 import { useHistory } from "react-router-dom";
 import { isUserAuthenticated } from "services/apis/accounts";
 
@@ -16,9 +15,11 @@ function RightHeader() {
 
     return (
         <Nav>
-            <Nav.Link onClick={handleCart}>
-                Cart <Badge bg="secondary">0</Badge>{" "}
-            </Nav.Link>
+            {isUserAuthenticated() && (
+                <Nav.Link onClick={handleCart}>
+                    Cart <Badge bg="secondary">0</Badge>{" "}
+                </Nav.Link>
+            )}
             <Nav.Item className="ms-3" style={{ display: "flex" }}>
                 <FormControl type="text" name="search" placeholder="Search" />
 
@@ -26,10 +27,6 @@ function RightHeader() {
                     Search
                 </Button>
             </Nav.Item>
-
-            <Button className="ms-2" variant="secondary">
-                <Icon.BrightnessHighFill style={{ color: "white" }} />
-            </Button>
         </Nav>
     );
 }

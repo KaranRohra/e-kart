@@ -49,7 +49,7 @@ function App() {
 
                     {/* ******** Private Routes ********  */}
                     <PrivateRoute exact path="/profile" component={Profile} />
-                    <Route exact path="/cart" component={Cart} />
+                    <PrivateRoute exact path="/cart" component={Cart} />
 
                     {/* ******** Not Found Route ********  */}
                     <Route path="*" component={PageNotFound} />
