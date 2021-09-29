@@ -16,6 +16,7 @@ import Cart from "components/cart/Cart";
 // ******** Routes ********
 import PrivateRoute from "routes/PrivateRoute";
 import AuthRoute from "routes/AuthRoute";
+import SingleProductView from "components/products/single-product/SingleProductView";
 
 export const Context = React.createContext();
 
@@ -39,6 +40,10 @@ function App() {
                     <Route exact path="/">
                         <Header />
                         <Home />
+                    </Route>
+                    <Route exact path="/products/:id">
+                        <Header />
+                        <SingleProductView />
                     </Route>
 
                     {/* ******** Auth Routes ********  */}

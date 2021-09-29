@@ -1,11 +1,20 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { products } from "components/home/products/dummyProductsData";
 import ProductCard from "components/home/products/ProductCard";
 import ProductCarousel from "components/home/products/ProductCarousel";
+import { getProducts } from "services/apis/products";
 
 function Products() {
     const coronaURL = "https://rukminim1.flixcart.com/flap/3006/433/image/4789bc3aefd54494.jpg?q=50";
+    const [products, setProducts] = React.useState([]);
+
+    React.useEffect(() => {
+        const callAPI = async () => {
+            const response = await getProducts({ page: 1 });
+            setProducts(response.data.results);
+        };
+        callAPI();
+    }, []);
 
     return (
         <div>
@@ -17,7 +26,9 @@ function Products() {
                 ))}
             </Row>
             <div className="m-2">
-                <img src={coronaURL} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="" />
+                <a href="https://pmnrf.gov.in/en/online-donation" target="_blank" rel="noreferrer">
+                    <img src={coronaURL} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="corona" />
+                </a>
             </div>
             <ProductCarousel products={products} />
         </div>
