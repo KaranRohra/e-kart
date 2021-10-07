@@ -12,6 +12,7 @@ import ForgotPassword from "components/accounts/ForgotPassword";
 import Login from "components/accounts/Login";
 import Register from "components/accounts/Register";
 import Cart from "components/cart/Cart";
+import Footer from "components/common/footer/Footer";
 
 // ******** Routes ********
 import PrivateRoute from "routes/PrivateRoute";
@@ -40,10 +41,12 @@ function App() {
                     <Route exact path="/">
                         <Header />
                         <Home />
+                        <Footer />
                     </Route>
                     <Route exact path="/products/:id">
                         <Header />
                         <SingleProductView />
+                        <Footer />
                     </Route>
 
                     {/* ******** Auth Routes ********  */}
