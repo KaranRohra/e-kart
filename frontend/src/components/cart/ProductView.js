@@ -6,8 +6,8 @@ function ProductView() {
     const product = products[0];
     return (
         <div>
-            {[1, 2, 3].map(() => (
-                <>
+            {[1, 2, 3].map((_, key) => (
+                <React.Fragment key={key}>
                     <div style={{ display: "flex", padding: 24 }}>
                         {/* Product Image */}
                         <div style={{ width: 112, height: 78.5 }}>
@@ -32,7 +32,7 @@ function ProductView() {
                         </div>
                     </div>
                     <hr />
-                </>
+                </React.Fragment>
             ))}
         </div>
     );

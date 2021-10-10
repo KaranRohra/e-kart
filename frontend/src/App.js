@@ -18,6 +18,7 @@ import Footer from "components/common/footer/Footer";
 import PrivateRoute from "routes/PrivateRoute";
 import AuthRoute from "routes/AuthRoute";
 import SingleProductView from "components/products/single-product/SingleProductView";
+import Order from "components/orders/Order";
 
 export const Context = React.createContext();
 
@@ -46,6 +47,11 @@ function App() {
                     <Route exact path="/products/:id">
                         <Header />
                         <SingleProductView />
+                        <Footer />
+                    </Route>
+                    <Route exact path="/orders">
+                        <Header />
+                        <Order />
                         <Footer />
                     </Route>
 
