@@ -6,12 +6,11 @@ function Footer() {
         <div className="bg-dark mt-5 text-light" style={{ display: "flex", justifyContent: "center" }}>
             <Row className="flex-column border border-light p-5" style={{ width: "30%" }}>
                 <Col>
-                    {" "}
-                    <h5>Our Partners</h5>{" "}
+                    <h5>Contributors</h5>{" "}
                 </Col>
                 <Col>
                     {" "}
-                    <p>Sujeta Surlkar (Mentor)</p>{" "}
+                    <p>Mrs Sunita Suralkar (Mentor)</p>{" "}
                 </Col>
                 <Col>
                     {" "}
@@ -46,6 +45,10 @@ function Footer() {
                 <Col>
                     {" "}
                     <h5>Contact Us</h5>{" "}
+                </Col>
+                <Col>
+                    {" "}
+                    <p>sunita.suralkar@ves.ac.in</p>{" "}
                 </Col>
                 <Col>
                     {" "}

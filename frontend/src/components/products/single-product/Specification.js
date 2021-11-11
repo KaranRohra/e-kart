@@ -1,11 +1,16 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 
 function Specification(props) {
+    const [readMore, setReadMore] = React.useState({
+        visibility: "hidden",
+        height: 0,
+    });
+
     return (
         <div>
             {props.specifications.map((specification, i) => (
-                <div className="m-3">
+                <div style={i !== 0 ? readMore : {}} className="m-3" key={i}>
                     <Row className="border p-2">
                         <Col>
                             <h4>{specification.title}</h4>
@@ -19,9 +24,17 @@ function Specification(props) {
                             <Col>{item.value}</Col>
                         </Row>
                     ))}
-                    {/* TODO Insert Read More Button */}
                 </div>
             ))}
+            {readMore.visibility === "hidden" && (
+                <Button
+                    className="mt-2"
+                    style={{ width: "100%" }}
+                    onClick={() => setReadMore({ visibility: "visible", height: "auto" })}
+                >
+                    <span>Read More</span>
+                </Button>
+            )}
         </div>
     );
 }

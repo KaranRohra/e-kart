@@ -1,12 +1,14 @@
 from accounts import models
 from accounts import serializers
 from django.conf import settings
+from django.http.response import JsonResponse
 from rest_framework import authentication
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework import views
 from rest_framework import viewsets
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
 
@@ -36,6 +38,16 @@ class UserAPI(views.APIView):
         return Response(user.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UserForgotPasswordAPI(views.APIView):
+    def post(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data["token"])
+        user = models.User.objects.get(id=token.user_id)
+        password = request.data["password"]
+        user.set_password(password)
+        user.save()
+        return Response()
+
+
 def send_reset_link_api(request):
     try:
         user = models.User.objects.get(email=request.GET["email"])
@@ -56,7 +68,7 @@ def send_reset_link_api(request):
             "status": "failure",
             "message": str(e),
         }
-    return Response(response)
+    return JsonResponse(response)
 
 
 class AddressAPI(viewsets.ModelViewSet):

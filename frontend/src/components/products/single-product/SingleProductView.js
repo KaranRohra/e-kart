@@ -23,7 +23,7 @@ function SingleProductView() {
     return (
         <Container style={{ background: "white" }}>
             {loading ? (
-                <BoxSpinner message="Getting product for you please be wait" />
+                <BoxSpinner message="Getting product for you please wait 🤗" />
             ) : (
                 <Row>
                     <Col md={5} xs={12} className="m-3">

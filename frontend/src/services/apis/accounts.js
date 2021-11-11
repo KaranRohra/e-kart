@@ -41,6 +41,15 @@ export const updateUserAPI = async (data) => {
     return response;
 };
 
+export const userForgotPasswordAPI = async (data) => {
+    const response = await baseTemplate({
+        url: "/accounts/forgot-password/",
+        data: data,
+        method: "POST",
+    });
+    return response;
+};
+
 export const sendPasswordResetLinkAPI = async (data) => {
     const response = await baseTemplate({
         url: "/accounts/reset-password/?email=" + data.email,
