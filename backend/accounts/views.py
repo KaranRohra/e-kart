@@ -25,15 +25,13 @@ class UserAPI(views.APIView):
         serializer = serializers.UserSerializers(request.user)
         return Response(serializer.data)
 
-    def patch(self, request, *args, **kwargs):
-        data = dict(request.data)
-        password = data.get("password")
-        if password:
-            request.user.set_password(password[0])
-
+    def patch(self, request):
         user = serializers.UserSerializers(instance=request.user, data=request.data, partial=True)
         if user.is_valid():
-            user.save()
+            password = request.data.get("password")
+            if password is not None:
+                request.user.set_password(password)  # set_password() applies the hash to the password
+            request.user.save()
             return self.get(request)
         return Response(user.errors, status=status.HTTP_400_BAD_REQUEST)
 

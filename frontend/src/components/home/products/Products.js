@@ -3,7 +3,6 @@ import { Row, Col } from "react-bootstrap";
 import ProductCard from "components/home/products/ProductCard";
 import ProductCarousel from "components/home/products/ProductCarousel";
 import { getProducts } from "services/apis/products";
-import { products as dummyProduct } from "./dummyProductsData";
 
 function Products() {
     const coronaURL = "https://rukminim1.flixcart.com/flap/3006/433/image/4789bc3aefd54494.jpg?q=50";
@@ -20,16 +19,9 @@ function Products() {
     return (
         <div>
             <Row className="bg-secondary p-5">
-                {dummyProduct.map((product, index) => (
+                {products.map((product, index) => (
                     <Col key={index}>
-                        {/* <ProductCard product={product} /> */}
-                        <ProductCard
-                            product={{
-                                images: [{ image_url: product.url }],
-                                short_title: product.title.shortTitle,
-                                tagline: product.tagline,
-                            }}
-                        />
+                        <ProductCard product={product} />
                     </Col>
                 ))}
             </Row>

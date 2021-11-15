@@ -2,7 +2,6 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ProductCard from "components/home/products/ProductCard";
-import { products } from "components/home/products/dummyProductsData";
 
 const responsive = {
     superLargeDesktop: {
@@ -38,18 +37,8 @@ function ProductCarousel(props) {
                 draggable={false}
                 className="p-3"
             >
-                {/* {props.products.map((product, index) => (
+                {props.products.map((product, index) => (
                     <ProductCard product={product} key={index} />
-                ))} */}
-                {products.map((product, index) => (
-                    <ProductCard
-                        product={{
-                            images: [{ image_url: product.url }],
-                            short_title: product.title.shortTitle,
-                            tagline: product.tagline,
-                        }}
-                        key={index}
-                    />
                 ))}
             </Carousel>
         </div>
