@@ -3,7 +3,8 @@ import Cookies from "universal-cookie";
 
 export const isUserAuthenticated = () => {
     const cookies = new Cookies();
-    return cookies.get("token");
+    const token = cookies.get("token");
+    return token ? "Token " + token : null;
 };
 
 export const createUserAPI = async (data) => {

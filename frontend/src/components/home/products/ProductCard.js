@@ -21,7 +21,7 @@ function ProductCard({ product }) {
             <Card.Body style={{ textAlign: "center" }}>
                 <Card.Title>{product.short_title}</Card.Title>
 
-                <Card.Text>{product.tagline} </Card.Text>
+                <Card.Text className="text-success">{product.tagline} </Card.Text>
             </Card.Body>
         </Card>
     );

@@ -20,14 +20,24 @@ class CartAPIView(APIView):
     def get(self, request):
         products = request.user.cart.products.all()
         serializer = serializers.ProductSerializer(products, many=True)
+        for product in serializer.data:
+            for image in product["images"]:
+                image["image_url"] = request.build_absolute_uri(image["image_url"])
         return Response(serializer.data)
 
     def put(self, request):
         product_id = request.data.get("id")
-        request.user.cart.products.add(product_id)
-        return Response(status=status.HTTP_200_OK, data={"message": "Product added to cart"})
+        if not product_id:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Product id is required"})
+        try:
+            request.user.cart.products.add(product_id)
+            return Response(status=status.HTTP_200_OK, data={"message": "Product added to cart"})
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Product not found", "error": str(e)})
 
     def delete(self, request):
         product_id = request.data.get("id")
+        if not product_id:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Product id is required"})
         request.user.cart.products.remove(product_id)
         return Response(status=status.HTTP_200_OK, data={"message": "Product removed from cart"})

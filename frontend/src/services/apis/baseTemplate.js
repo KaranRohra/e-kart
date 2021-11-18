@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 
 const baseTemplate = async ({ url, method, data, headers }) => {
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     const cookies = new Cookies();
 
     try {

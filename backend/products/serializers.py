@@ -32,6 +32,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)
     specification_titles = SpecificationTitleSerializer(many=True, read_only=True)
+    seller = accounts_serializers.UserSerializers()
 
     class Meta:
         model = models.Product

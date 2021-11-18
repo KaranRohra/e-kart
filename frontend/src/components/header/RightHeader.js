@@ -1,3 +1,4 @@
+import { Context } from "App";
 import React from "react";
 import { Nav, Badge, FormControl, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
@@ -5,6 +6,7 @@ import { isUserAuthenticated } from "services/apis/accounts";
 
 function RightHeader() {
     const history = useHistory();
+    const context = React.useContext(Context);
     const handleCart = () => {
         if (isUserAuthenticated) {
             history.push("/cart");
@@ -17,7 +19,7 @@ function RightHeader() {
         <Nav>
             {isUserAuthenticated() && (
                 <Nav.Link onClick={handleCart}>
-                    Cart <Badge bg="secondary">0</Badge>{" "}
+                    Cart <Badge bg="secondary">{Object.keys(context.state.cart).length}</Badge>
                 </Nav.Link>
             )}
             <Nav.Item className="ms-3" style={{ display: "flex" }}>

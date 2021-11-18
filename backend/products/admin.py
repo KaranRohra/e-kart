@@ -30,4 +30,9 @@ class SpecificationTitleAdmin(admin.ModelAdmin):
 
 admin.site.register(models.WishList)
 
-admin.site.register(models.RatingAndReview)
+
+@admin.register(models.RatingAndReview)
+class RatingAndReviewAdmin(admin.ModelAdmin):
+    list_display = ("title", "user", "product")
+    search_fields = ("title", "user", "product")
+    list_filter = ("product",)

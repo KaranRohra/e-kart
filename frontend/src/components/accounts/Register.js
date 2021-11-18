@@ -2,8 +2,9 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import BaseForm from "components/accounts/BaseForm";
-import { createUserAPI } from "services/apis/accounts";
+import { authenticateUserAPI, createUserAPI } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
+import { createUserCartAPI } from "services/apis/cart";
 
 function Register() {
     const [loading, setLoading] = React.useState(false);
@@ -24,6 +25,8 @@ function Register() {
         const callAPI = async () => {
             const response = await createUserAPI(data);
             if (response.status === 201) {
+                const token = (await authenticateUserAPI(data)).data.token;
+                createUserCartAPI(token); // Creating a cart for the user
                 history.push("/login");
                 return;
             } else {
