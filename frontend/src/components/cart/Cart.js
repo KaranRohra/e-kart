@@ -5,7 +5,7 @@ import ProductView from "components/cart/ProductView";
 import SubTotal from "components/cart/SubTotal";
 import Header from "components/header/Header";
 import { Context } from "App";
-import { getProductsFromCart, removeProductFromCartAPI } from "services/apis/cart";
+import { getProductsFromCartAPI, removeProductFromCartAPI } from "services/apis/cart";
 import { addProductToCart, removeProductFromCart } from "services/actions/cart";
 import SkeletonLoader from "components/common/spinners/SkeletonLoader";
 
@@ -21,7 +21,7 @@ function Cart() {
 
     React.useEffect(() => {
         const callApi = async () => {
-            const response = await getProductsFromCart();
+            const response = await getProductsFromCartAPI();
             const productToAdd = {};
             response.data.forEach((product) => {
                 productToAdd[product.id] = product;

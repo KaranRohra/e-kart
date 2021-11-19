@@ -29,7 +29,7 @@ export const removeProductFromCartAPI = async (data) => {
     return response;
 };
 
-export const getProductsFromCart = async () => {
+export const getProductsFromCartAPI = async () => {
     const response = await baseTemplate({
         url: "/cart/",
         method: "GET",

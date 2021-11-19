@@ -7,6 +7,8 @@ import BoxSpinner from "components/common/spinners/BoxSpinner";
 import Cookies from "universal-cookie";
 import { Context } from "App";
 import { setCookie } from "services/actions/accounts";
+import { initializeState } from "init";
+import { INIT_STATE } from "services/reducers/constants";
 
 function Login() {
     const context = React.useContext(Context);
@@ -26,7 +28,9 @@ function Login() {
             const response = await authenticateUserAPI(data);
             if (response.status === 200) {
                 cookies.set("token", response.data.token);
-                context.dispatch(setCookie({ token: response.data.token }));
+
+                const initialState = await initializeState();
+                context.dispatch({ type: INIT_STATE, data: initialState });
                 history.push("/");
                 return;
             } else {
