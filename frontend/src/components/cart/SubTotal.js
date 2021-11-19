@@ -1,10 +1,13 @@
 import { Context } from "App";
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
+import { useHistory } from "react-router";
 
 function SubTotal() {
     const context = React.useContext(Context);
+    const history = useHistory();
     let subTotal = 0;
+
     function sum(key) {
         const products = context.state.cart;
         let sum = 0;
@@ -25,25 +28,40 @@ function SubTotal() {
 
     return (
         <Card bg="light" text="dark" style={{ width: "18rem" }}>
-            <Card.Header>Price Details</Card.Header>
-            <Card.Body>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <p>Price (3 items)</p>
-                    <p>₹{sum("actual_price")}</p>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <p>Discount</p>
-                    <p className="text-success">-₹{-sum("discount")}</p>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <p>Shipping Charges</p>
-                    <p className="text-success">₹{sum("shipping_fee") || "Free"}</p>
-                </div>
-            </Card.Body>
-            <Card.Footer style={{ display: "flex", justifyContent: "space-between" }}>
-                <h5>Total</h5>
-                <h5>₹{subTotal}</h5>
-            </Card.Footer>
+            {Object.keys(context.state.cart).length === 0 ? (
+                <>
+                    <Card.Header>
+                        <h5>Cart is Empty</h5>{" "}
+                    </Card.Header>
+                    <Card.Body>
+                        <Button variant="warning" onClick={() => history.push("/")}>
+                            Explore
+                        </Button>
+                    </Card.Body>
+                </>
+            ) : (
+                <>
+                    <Card.Header>Price Details</Card.Header>
+                    <Card.Body>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <p>Price (3 items)</p>
+                            <p>₹{sum("actual_price")}</p>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <p>Discount</p>
+                            <p className="text-success">-₹{-sum("discount")}</p>
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <p>Shipping Charges</p>
+                            <p className="text-success">₹{sum("shipping_fee") || "Free"}</p>
+                        </div>
+                    </Card.Body>
+                    <Card.Footer style={{ display: "flex", justifyContent: "space-between" }}>
+                        <h5>Total</h5>
+                        <h5>₹{subTotal}</h5>
+                    </Card.Footer>
+                </>
+            )}
         </Card>
     );
 }

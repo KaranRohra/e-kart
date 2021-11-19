@@ -53,8 +53,7 @@ function ProductView(props) {
                 </>
             ) : (
                 <div>
-                    <h1>Your cart is empty </h1>
-                    <h1> Search product to enjoy shopping</h1>
+                    <h1> Search product to enjoy shopping 🤩</h1>
                 </div>
             )}
         </div>

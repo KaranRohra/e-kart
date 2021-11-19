@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, Container, Row, Col, Button } from "react-bootstrap";
+import { Carousel, Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import { useParams } from "react-router";
 import * as Icons from "react-bootstrap-icons";
 import { getProduct } from "services/apis/products";
@@ -13,6 +13,7 @@ function SingleProductView() {
     const context = React.useContext(Context);
     const [loading, setLoading] = React.useState(true);
     const [product, setProduct] = React.useState(null);
+    const [addingProductToCart, setAddingProductToCart] = React.useState(false);
     const { id } = useParams();
 
     React.useEffect(() => {
@@ -25,7 +26,6 @@ function SingleProductView() {
     }, [id]);
 
     const handleAddToCart = () => {
-        addProductToCartAPI({ id: product.id });
         const productToAdd = context.state.cart || {};
         productToAdd[product.id] = product;
         context.dispatch(addProductToCart(productToAdd));
@@ -49,18 +49,31 @@ function SingleProductView() {
                                 </Carousel.Item>
                             ))}
                         </Carousel>
-                        <Button
-                            onClick={handleAddToCart}
-                            variant="warning"
-                            className="m-3"
-                            style={{ width: "100%", fontSize: "18px" }}
-                        >
-                            Add to Cart <Icons.CartFill style={{ color: "blue" }} />
-                        </Button>
+                        {addingProductToCart ? (
+                            <div className="text-center mt-2">
+                                <Button disabled>
+                                    <Spinner animation="border" variant="warning" />
+                                </Button>
+                            </div>
+                        ) : (
+                            <Button
+                                onClick={async () => {
+                                    setAddingProductToCart(true);
+                                    handleAddToCart();
+                                    await addProductToCartAPI({ id: product.id });
+                                    setAddingProductToCart(false);
+                                }}
+                                variant="warning"
+                                className="m-3"
+                                style={{ width: "100%", fontSize: "18px" }}
+                            >
+                                Add to Cart <Icons.CartFill style={{ color: "blue" }} />
+                            </Button>
+                        )}
                     </Col>
                     <Col className="m-3">
                         <h6>{product.long_title}</h6>
-                        <p className="mt-1 text-success">Extra ₹{product.discount} off</p>
+                        <p className="mt-1 text-success">Extra ₹{product.actual_price - product.selling_price} off</p>
                         <div style={{ display: "flex" }}>
                             <h4>₹{product.selling_price}</h4>
                             <strike className="ms-2 text-secondary">₹{product.actual_price}</strike>
@@ -68,12 +81,12 @@ function SingleProductView() {
                         </div>
                         <hr />
                         <div>
-                            <h5>Product Description </h5>
+                            <h5>Product Description</h5>
                             <p>{product.description}</p>
                         </div>
                         <hr />
                         <div>
-                            <h3>Specification </h3>
+                            <h3>Specification</h3>
                             <Specification specifications={product.specification_titles} />
                         </div>
                     </Col>

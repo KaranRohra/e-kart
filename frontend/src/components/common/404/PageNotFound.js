@@ -15,10 +15,10 @@ function PageNotFound() {
     return (
         <div className="page-not-found">
             <div className="main">
-                <h1 className="page-not-found-h1">
+                <h1 className="page-not-found-h1 text-primary">
                     4 <span className="style"> 0</span> 4
                     <div className="blink typing">
-                        <p className="page-not-found-p">
+                        <p className="page-not-found-p text-warning">
                             Unfortunately the page you are looking for has been moved or deleted
                         </p>
                         <Button
