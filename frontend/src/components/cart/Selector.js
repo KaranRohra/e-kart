@@ -1,7 +1,10 @@
+import { Context } from "App";
 import React from "react";
 import { Button } from "react-bootstrap";
+import { addProductToCart } from "services/actions/cart";
 
 function Selector(props) {
+    const context = React.useContext(Context);
     const [quantity, setQuantity] = React.useState(props.product.selected_quantity || 1);
     const buttonStyle = {
         width: 58,
@@ -17,9 +20,11 @@ function Selector(props) {
     };
 
     const updateQuantity = (q) => {
-        if (quantity + q >= 1 && quantity + q <= props.product.max_product_quantity) {
-            props.product["selected_quantity"] = quantity + q;
-            setQuantity(quantity + q);
+        q = quantity + q;
+        if (q >= 1 && q <= props.product.max_product_quantity) {
+            props.product["selected_quantity"] = q;
+            context.dispatch(addProductToCart({ ...context.state.cart, [props.product.id]: props.product }));
+            setQuantity(q);
         }
     };
 
