@@ -27,10 +27,7 @@ export const Context = React.createContext();
 
 const initialState = {
     user: {},
-    address: {},
     cart: {},
-    products: {},
-    cookies: {},
 };
 
 function App() {

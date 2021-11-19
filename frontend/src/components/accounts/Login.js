@@ -6,7 +6,6 @@ import { authenticateUserAPI } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import Cookies from "universal-cookie";
 import { Context } from "App";
-import { setCookie } from "services/actions/accounts";
 import { initializeState } from "init";
 import { INIT_STATE } from "services/reducers/constants";
 
