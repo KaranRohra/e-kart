@@ -1,12 +1,9 @@
 import baseTemplate from "services/apis/baseTemplate";
 
-export const createUserCartAPI = async (token) => {
+export const createUserCartAPI = async () => {
     const response = await baseTemplate({
         url: "/cart/",
         method: "POST",
-        headers: {
-            Authorization: token,
-        },
     });
     return response;
 };
@@ -29,9 +26,13 @@ export const removeProductFromCartAPI = async (data) => {
     return response;
 };
 
-export const getProductsFromCartAPI = async () => {
+export const getProductsFromCartAPI = async (data) => {
+    let url = "/cart/?";
+    for (let key in data) {
+        url += `${key}=${data[key]}&`;
+    }
     const response = await baseTemplate({
-        url: "/cart/",
+        url: url,
         method: "GET",
     });
     return response;

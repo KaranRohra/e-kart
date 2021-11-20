@@ -24,10 +24,11 @@ function Register() {
 
         const callAPI = async () => {
             const response = await createUserAPI(data);
-            if (response.status === 201) {
-                const token = (await authenticateUserAPI(data)).data.token;
-                createUserCartAPI(token); // Creating a cart for the user
-                history.push("/login");
+            if (response.data) {
+                data["username"] = data.email;
+                await authenticateUserAPI(data);
+                createUserCartAPI(); // Creating a cart for the user
+                history.push("/");
                 return;
             } else {
                 setAlert({

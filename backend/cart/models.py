@@ -9,3 +9,16 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+class SaveForLater(models.Model):
+    products = models.ManyToManyField(products_models.Product)
+    user = models.OneToOneField(
+        accounts_models.User,
+        on_delete=models.CASCADE,
+        related_name="save_for_later",
+        related_query_name="save_for_later",
+    )
+
+    def __str__(self):
+        return str(self.user)

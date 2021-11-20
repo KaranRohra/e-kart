@@ -12,13 +12,16 @@ class CartAPIView(APIView):
     authentication_classes = (authentication.TokenAuthentication,)
 
     def post(self, request):
-        cart = models.Cart()
-        cart.user = request.user
-        cart.save()
+        objects_to_create = (models.Cart(user=request.user), models.SaveForLater(user=request.user))
+        for obj in objects_to_create:
+            obj.save()
         return Response(status=status.HTTP_201_CREATED)
 
     def get(self, request):
-        products = request.user.cart.products.all()
+        if request.query_params.get("type") == "SAVE_FOR_LATER":
+            products = request.user.save_for_later.products.all()
+        else:
+            products = request.user.cart.products.all()
         serializer = serializers.ProductSerializer(products, many=True)
         for product in serializer.data:
             for image in product["images"]:
@@ -30,7 +33,10 @@ class CartAPIView(APIView):
         if not product_id:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Product id is required"})
         try:
-            request.user.cart.products.add(product_id)
+            if request.data.get("type") == "SAVE_FOR_LATER":
+                request.user.save_for_later.products.add(product_id)
+            else:
+                request.user.cart.products.add(product_id)
             return Response(status=status.HTTP_200_OK, data={"message": "Product added to cart"})
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Product not found", "error": str(e)})
@@ -39,5 +45,6 @@ class CartAPIView(APIView):
         product_id = request.data.get("id")
         if not product_id:
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Product id is required"})
-        request.user.cart.products.remove(product_id)
+        obj = request.user.save_for_later if request.data.get("type") == "SAVE_FOR_LATER" else request.user.cart
+        obj.products.remove(product_id)
         return Response(status=status.HTTP_200_OK, data={"message": "Product removed from cart"})

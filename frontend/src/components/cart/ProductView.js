@@ -17,7 +17,7 @@ function ProductView(props) {
                             >
                                 Remove
                             </Button>
-                            <div style={{ display: "flex", padding: 24 }}>
+                            <div style={{ display: "flex" }} className="pt-2 pe-2 ps-2">
                                 {/* Product Image */}
                                 <div style={{ width: 112, height: 78.5 }}>
                                     <img
@@ -45,6 +45,13 @@ function ProductView(props) {
                                             ₹{props.products[productID].actual_price}
                                         </strike>
                                     </div>
+                                    <p
+                                        onClick={() => props.handleSaveForLater(productID)}
+                                        className="text-danger"
+                                        style={{ textDecoration: "underline", cursor: "pointer" }}
+                                    >
+                                        Save for later
+                                    </p>
                                 </div>
                             </div>
                             <hr />
@@ -53,8 +60,7 @@ function ProductView(props) {
                 </>
             ) : (
                 <div>
-                    <h1>Your cart is empty </h1>
-                    <h1> Search product to enjoy shopping</h1>
+                    <h1> Search product to enjoy shopping 🤩</h1>
                 </div>
             )}
         </div>

@@ -22,6 +22,7 @@ export const authenticateUserAPI = async (data) => {
         data: data,
         method: "POST",
     });
+    if (response.data) new Cookies().set("token", response.data.token);
     return response;
 };
 
