@@ -14,7 +14,7 @@
       "ecmaVersion": 2020
     },
     "rules": {
-      "no-console": "error",
-      "no-alert": "error"
+      "no-console": "warn",
+      "no-alert": "warn"
     }
 }

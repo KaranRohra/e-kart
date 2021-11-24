@@ -10,4 +10,5 @@ urlpatterns = [
     path("register/", views.RegisterAPI.as_view(), name="register"),
     path("reset-password/", views.send_reset_link_api, name="reset-link"),
     path("user/", views.UserAPI.as_view(), name="user"),
+    path("forgot-password/", views.UserForgotPasswordAPI.as_view(), name="user"),
 ] + route.urls

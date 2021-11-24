@@ -1,12 +1,14 @@
 from accounts import models
 from accounts import serializers
 from django.conf import settings
+from django.http.response import JsonResponse
 from rest_framework import authentication
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework import views
 from rest_framework import viewsets
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
 
@@ -23,17 +25,25 @@ class UserAPI(views.APIView):
         serializer = serializers.UserSerializers(request.user)
         return Response(serializer.data)
 
-    def patch(self, request, *args, **kwargs):
-        data = dict(request.data)
-        password = data.get("password")
-        if password:
-            request.user.set_password(password[0])
-
+    def patch(self, request):
         user = serializers.UserSerializers(instance=request.user, data=request.data, partial=True)
         if user.is_valid():
-            user.save()
+            password = request.data.get("password")
+            if password is not None:
+                request.user.set_password(password)  # set_password() applies the hash to the password
+            request.user.save()
             return self.get(request)
         return Response(user.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserForgotPasswordAPI(views.APIView):
+    def post(self, request, *args, **kwargs):
+        token = Token.objects.get(key=request.data["token"])
+        user = models.User.objects.get(id=token.user_id)
+        password = request.data["password"]
+        user.set_password(password)
+        user.save()
+        return Response()
 
 
 def send_reset_link_api(request):
@@ -56,7 +66,7 @@ def send_reset_link_api(request):
             "status": "failure",
             "message": str(e),
         }
-    return Response(response)
+    return JsonResponse(response)
 
 
 class AddressAPI(viewsets.ModelViewSet):

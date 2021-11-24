@@ -15,6 +15,7 @@ class Product(models.Model):
     tagline = models.CharField(max_length=200)
     category = models.CharField(max_length=70, choices=constants.CATEGORY)
     sub_category = models.CharField(max_length=70, choices=constants.SUB_CATEGORY, null=True, blank=True)
+    max_product_quantity = models.PositiveIntegerField(default=1)
     seller = models.ForeignKey(
         accounts_models.User,
         on_delete=models.CASCADE,
