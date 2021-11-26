@@ -22,6 +22,7 @@ import Order from "components/orders/Order";
 import { INIT_STATE } from "services/reducers/constants";
 import { initializeState } from "init";
 import { Spinner, Button } from "react-bootstrap";
+import ChangePassword from "components/accounts/ChangePassword";
 
 export const Context = React.createContext();
 
@@ -72,6 +73,9 @@ function App() {
                                 <Header />
                                 <Order />
                                 <Footer />
+                            </Route>
+                            <Route exact path="/change-password">
+                                <ChangePassword />
                             </Route>
 
                             {/* ******** Auth Routes ********  */}

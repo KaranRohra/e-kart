@@ -4,7 +4,7 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 function ViewAddresses() {
     return (
         <Container className="mt-3 mb-3 p-3 bg-dark text-light">
-            <h1>Address</h1>
+            <h2>Address</h2>
             <hr />
             <Row className="justify-content-center">
                 {Array.from([1, 1, 1, 1]).map((address, index) => (
