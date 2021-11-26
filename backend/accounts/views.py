@@ -26,20 +26,35 @@ class UserAPI(views.APIView):
         return Response(serializer.data)
 
     def patch(self, request):
-        old_password = request.data.get("old_password")
+        current_password = request.data.get("current_password")
         new_password = request.data.get("new_password")
-        if old_password and new_password:
-            if request.user.check_password(old_password):
+
+        new_email = request.data.get("new_email")
+        if current_password and new_password:
+            if request.user.check_password(current_password):
                 request.user.set_password(new_password)
                 request.user.save()
                 return Response({"message": "Password changed successfully"}, status=status.HTTP_200_OK)
             else:
                 return Response(
                     data={
-                        "old_password": "wrong password",
+                        "current_password": "wrong password",
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
+        elif new_email:
+            user = models.User.objects.filter(email=new_email).first()
+            if user:
+                return Response(
+                    data={
+                        "new_email": "Email already exists",
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            else:
+                request.user.email = new_email
+                request.user.save()
+                return Response({"message": "Email changed successfully"}, status=status.HTTP_200_OK)
         else:
             user = serializers.UserSerializers(instance=request.user, data=request.data, partial=True)
             if user.is_valid():

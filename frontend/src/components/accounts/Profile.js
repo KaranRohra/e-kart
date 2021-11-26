@@ -40,7 +40,7 @@ function Profile() {
             ) : (
                 <>
                     <Header />
-                    <Container className="border border-warning mt-2">
+                    <Container className="border border-dark mt-2">
                         <Container className="mt-3 border border-primary p-3 bg-dark text-light">
                             {alert && <Alert variant={alert.type}>{alert.message}</Alert>}
                             <h2>Personal Details</h2>
@@ -71,7 +71,9 @@ function Profile() {
                                         <Link to="/change-password" as="button" className="btn btn-success m-1">
                                             Change Password
                                         </Link>
-                                        <Button className="btn btn-danger m-1">Change Email</Button>
+                                        <Link to="/change-email" as="button" className="btn btn-danger m-1">
+                                            Change Email
+                                        </Link>
                                     </Col>
                                     <Col>
                                         <Button

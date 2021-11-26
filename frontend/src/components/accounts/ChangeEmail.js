@@ -1,63 +1,49 @@
-import BoxSpinner from "components/common/spinners/BoxSpinner";
 import React from "react";
-import { Container, Row, Col, Form, Alert, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import * as Icons from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
+import BoxSpinner from "components/common/spinners/BoxSpinner";
+import { Context } from "App";
 import { updateUserAPI } from "services/apis/accounts";
 
-function ChangePassword() {
-    const [showCurrentPassword, setShowCurrentPassword] = React.useState(false);
-    const [showNewPassword, setShowNewPassword] = React.useState(false);
+function ChangeEmail() {
+    const context = React.useContext(Context);
     const [loading, setLoading] = React.useState(false);
+    const [data, setData] = React.useState({
+        current_email: context.state.user.email,
+    });
     const [alert, setAlert] = React.useState({});
-    const [data, setData] = React.useState({});
+
+    const formFields = [
+        {
+            name: "current_email",
+            disabled: true,
+            label: "Current Email",
+        },
+        {
+            label: "New Email",
+            name: "new_email",
+            placeholder: "Enter new email",
+        },
+    ];
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // eslint-disable-next-line
-        const passwordValidationRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/g;
         setLoading(true);
-        if (!data.new_password.match(passwordValidationRegex)) {
-            setAlert({
-                variant: "danger",
-                message:
-                    "New password must contain at least 8 characters, one uppercase, one lowercase and one number.",
-            });
+        const response = await updateUserAPI(data);
+        if (response.status === 200) {
+            setAlert({ variant: "success", message: "Email updated successfully." });
+            context.state.user.email = data.new_email;
         } else {
-            const response = await updateUserAPI(data);
-            if (response.status === 200) {
-                setAlert({
-                    variant: "success",
-                    message: "Password changed successfully.",
-                });
-            } else {
-                setAlert({
-                    variant: "danger",
-                    message: "Wrong current password",
-                });
-            }
+            setAlert({ variant: "danger", message: "Account with new email already exist." });
         }
         setLoading(false);
     };
-    const formFields = [
-        {
-            name: "current_password",
-            showPassword: showCurrentPassword,
-            setShowPassword: setShowCurrentPassword,
-            placeholder: "Current Password",
-        },
-        {
-            name: "new_password",
-            showPassword: showNewPassword,
-            setShowPassword: setShowNewPassword,
-            placeholder: "New Password",
-        },
-    ];
 
     return (
         <Container className="p-5 mt-5 bg-dark text-light">
             {loading ? (
-                <BoxSpinner message="Updating Password...!" />
+                <BoxSpinner message="Updating Email..!" />
             ) : (
                 <Row>
                     <Col md={{ offset: 3, span: 7 }} lg={{ offset: 4, span: 5 }} xl={{ offset: 4, span: 4 }}>
@@ -80,30 +66,25 @@ function ChangePassword() {
                                     {alert.variant && <Alert variant={alert.variant}>{alert.message}</Alert>}
                                     {formFields.map((field, key) => (
                                         <React.Fragment key={key}>
+                                            <Form.Label>{field.label}</Form.Label>
                                             <Form.Group className="mb-3">
                                                 {/* <Form.Label>Old Password</Form.Label> */}
                                                 <Form.Control
                                                     onChange={(e) =>
                                                         setData({ ...data, [e.target.name]: e.target.value })
                                                     }
-                                                    type={field.showPassword ? "text" : "password"}
+                                                    type="email"
                                                     placeholder={field.placeholder}
                                                     name={field.name}
                                                     defaultValue={data[field.name]}
+                                                    disabled={field.disabled}
                                                     required
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3">
-                                                <Form.Check
-                                                    type="checkbox"
-                                                    label="Show Password"
-                                                    onChange={() => field.setShowPassword(!field.showPassword)}
                                                 />
                                             </Form.Group>
                                         </React.Fragment>
                                     ))}
                                     <Button variant="primary m-1" type="submit">
-                                        Update Password
+                                        Update Email
                                     </Button>
                                     <Link to="/profile" as="button" className="m-1 btn btn-danger">
                                         Cancel
@@ -118,4 +99,4 @@ function ChangePassword() {
     );
 }
 
-export default ChangePassword;
+export default ChangeEmail;

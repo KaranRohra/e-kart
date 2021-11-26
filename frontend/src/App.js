@@ -23,6 +23,7 @@ import { INIT_STATE } from "services/reducers/constants";
 import { initializeState } from "init";
 import { Spinner, Button } from "react-bootstrap";
 import ChangePassword from "components/accounts/ChangePassword";
+import ChangeEmail from "components/accounts/ChangeEmail";
 
 export const Context = React.createContext();
 
@@ -76,6 +77,9 @@ function App() {
                             </Route>
                             <Route exact path="/change-password">
                                 <ChangePassword />
+                            </Route>
+                            <Route exact path="/change-email">
+                                <ChangeEmail />
                             </Route>
 
                             {/* ******** Auth Routes ********  */}
