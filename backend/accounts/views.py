@@ -103,4 +103,4 @@ class AddressAPI(viewsets.ModelViewSet):
     serializer_class = serializers.AddressSerializers
 
     def get_queryset(self):
-        return models.Address.objects.filter(user=self.request.user)
+        return models.Address.objects.filter(user=self.request.user, is_deleted=False)

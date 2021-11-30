@@ -22,3 +22,6 @@ class Address(models.Model):
     phone_number_1 = models.CharField(max_length=20)
     phone_number_2 = models.CharField(max_length=20, null=True)
     is_deleted = models.BooleanField(default=False, verbose_name="Instead of deleting this address, mark as deleted")
+
+    def __str__(self):
+        return f"{self.user} - {self.name}"

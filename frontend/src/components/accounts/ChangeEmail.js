@@ -52,7 +52,7 @@ function ChangeEmail() {
                                 <Alert variant="success">
                                     {alert.message} <Icons.CheckCircleFill className="me-1" />{" "}
                                 </Alert>
-                                <Link to="/">
+                                <Link to="/profile">
                                     <Button variant="success" className="mt-3">
                                         <Icons.ArrowLeft className="me-1" />
                                         Go Back
@@ -61,7 +61,7 @@ function ChangeEmail() {
                             </>
                         ) : (
                             <>
-                                <h3>Update Password</h3>
+                                <h3>Update Email</h3>
                                 <Form className="mt-3" onSubmit={handleSubmit}>
                                     {alert.variant && <Alert variant={alert.variant}>{alert.message}</Alert>}
                                     {formFields.map((field, key) => (

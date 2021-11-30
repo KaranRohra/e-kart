@@ -1,30 +1,82 @@
 import React from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Card, Button } from "react-bootstrap";
+import BoxSpinner from "components/common/spinners/BoxSpinner";
+import { Link } from "react-router-dom";
+import { deleteUserAddressAPI, getUserAddressAPI } from "services/apis/accounts";
 
 function ViewAddresses() {
+    const [address, setAddress] = React.useState([]);
+    const [loading, setLoading] = React.useState(false);
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            const response = await getUserAddressAPI();
+            setAddress(response.data);
+            setLoading(false);
+        };
+        fetchData();
+    }, []);
+
+    const deleteAddress = async (addressID) => {
+        setLoading(true);
+        const response = await deleteUserAddressAPI({ addressID: addressID });
+        if (response.status === 204) {
+            const response = await getUserAddressAPI();
+            setAddress(response.data);
+        }
+        setLoading(false);
+    };
+
     return (
         <Container className="mt-3 mb-3 p-3 bg-dark text-light">
-            <h2>Address</h2>
-            <hr />
-            <Row className="justify-content-center">
-                {Array.from([1, 1, 1, 1]).map((address, index) => (
-                    <Col className="mt-2" key={index}>
-                        <Card style={{ width: "18rem" }} className="text-dark">
-                            <Card.Header>Header</Card.Header>
-                            <Card.Body>
-                                <Card.Text>
-                                    Some quick example text to build on the card title and make up the bulk of the
-                                    card's content.
-                                </Card.Text>
-                                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                    <Button variant="primary">Edit</Button>
-                                    <Button variant="danger">Delete</Button>
-                                </div>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
+            {loading ? (
+                <BoxSpinner />
+            ) : (
+                <>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <h3>Address</h3>
+                        <Link to="/add-address" as="button" className="btn btn-primary">
+                            + Add Address
+                        </Link>
+                    </div>
+                    <hr />
+                    <Container>
+                        {Object.keys(address).length !== 0 && (
+                            <div style={{ display: "flex" }}>
+                                {address.map((address, index) => (
+                                    <div className="m-2" key={index}>
+                                        <Card style={{ width: "18rem", height: "15rem" }} className="text-dark">
+                                            <Card.Header>{address.name}</Card.Header>
+                                            <Card.Body
+                                                style={{
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    justifyContent: "space-between",
+                                                }}
+                                            >
+                                                <Card.Text>
+                                                    {address.address_line_1}, <br />
+                                                    {address.landmark}, {address.city}, <br />
+                                                    {address.state} - {address.pincode}. <br />
+                                                </Card.Text>
+                                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                                    <Link to={`edit-address/${address.id}`} className="btn btn-primary">
+                                                        Edit
+                                                    </Link>
+                                                    <Button onClick={() => deleteAddress(address.id)} variant="danger">
+                                                        Delete
+                                                    </Button>
+                                                </div>
+                                            </Card.Body>
+                                        </Card>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </Container>
+                </>
+            )}
         </Container>
     );
 }

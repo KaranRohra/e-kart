@@ -24,6 +24,7 @@ import { initializeState } from "init";
 import { Spinner, Button } from "react-bootstrap";
 import ChangePassword from "components/accounts/ChangePassword";
 import ChangeEmail from "components/accounts/ChangeEmail";
+import AddOrUpdateAddress from "components/accounts/AddOrUpdateAddress";
 
 export const Context = React.createContext();
 
@@ -80,6 +81,12 @@ function App() {
                             </Route>
                             <Route exact path="/change-email">
                                 <ChangeEmail />
+                            </Route>
+                            <Route exact path="/edit-address/:id">
+                                <AddOrUpdateAddress />
+                            </Route>
+                            <Route exact path="/add-address">
+                                <AddOrUpdateAddress />
                             </Route>
 
                             {/* ******** Auth Routes ********  */}
