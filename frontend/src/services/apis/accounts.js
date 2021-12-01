@@ -93,11 +93,3 @@ export const createUserAddressAPI = async (data) => {
     });
     return response;
 };
-
-export const deleteUserAddressAPI = async ({ addressID }) => {
-    const response = await baseTemplate({
-        url: `/accounts/address/${addressID}/`,
-        method: "DELETE",
-    });
-    return response;
-};

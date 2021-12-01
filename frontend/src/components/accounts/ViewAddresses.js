@@ -2,28 +2,29 @@ import React from "react";
 import { Container, Card, Button } from "react-bootstrap";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import { Link } from "react-router-dom";
-import { deleteUserAddressAPI, getUserAddressAPI } from "services/apis/accounts";
+import { getUserAddressAPI, updateUserAddressAPI } from "services/apis/accounts";
 
 function ViewAddresses() {
-    const [address, setAddress] = React.useState([]);
+    const [addresses, setAddresses] = React.useState([]);
     const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             const response = await getUserAddressAPI();
-            setAddress(response.data);
+            setAddresses(response.data);
             setLoading(false);
         };
         fetchData();
     }, []);
 
-    const deleteAddress = async (addressID) => {
+    const deleteAddress = async (address) => {
         setLoading(true);
-        const response = await deleteUserAddressAPI({ addressID: addressID });
-        if (response.status === 204) {
+        address.is_deleted = true;
+        const response = await updateUserAddressAPI(address);
+        if (response.status === 200) {
             const response = await getUserAddressAPI();
-            setAddress(response.data);
+            setAddresses(response.data);
         }
         setLoading(false);
     };
@@ -42,9 +43,9 @@ function ViewAddresses() {
                     </div>
                     <hr />
                     <Container>
-                        {Object.keys(address).length !== 0 && (
+                        {Object.keys(addresses).length !== 0 && (
                             <div style={{ display: "flex" }}>
-                                {address.map((address, index) => (
+                                {addresses.map((address, index) => (
                                     <div className="m-2" key={index}>
                                         <Card style={{ width: "18rem", height: "15rem" }} className="text-dark">
                                             <Card.Header>{address.name}</Card.Header>
@@ -64,7 +65,7 @@ function ViewAddresses() {
                                                     <Link to={`edit-address/${address.id}`} className="btn btn-primary">
                                                         Edit
                                                     </Link>
-                                                    <Button onClick={() => deleteAddress(address.id)} variant="danger">
+                                                    <Button onClick={() => deleteAddress(address)} variant="danger">
                                                         Delete
                                                     </Button>
                                                 </div>
