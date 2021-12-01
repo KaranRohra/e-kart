@@ -1,7 +1,7 @@
+import GoBackButton from "components/common/GoBackButton";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import React from "react";
 import { Container, Row, Col, Form, Alert, Button } from "react-bootstrap";
-import * as Icons from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { updateUserAPI } from "services/apis/accounts";
 
@@ -14,9 +14,8 @@ function ChangePassword() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // eslint-disable-next-line
-        const passwordValidationRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/g;
         setLoading(true);
+        const passwordValidationRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/g;
         if (!data.new_password.match(passwordValidationRegex)) {
             setAlert({
                 variant: "danger",
@@ -62,17 +61,7 @@ function ChangePassword() {
                 <Row>
                     <Col md={{ offset: 3, span: 7 }} lg={{ offset: 4, span: 5 }} xl={{ offset: 4, span: 4 }}>
                         {alert.variant === "success" ? (
-                            <>
-                                <Alert variant="success">
-                                    {alert.message} <Icons.CheckCircleFill className="me-1" />{" "}
-                                </Alert>
-                                <Link to="/">
-                                    <Button variant="success" className="mt-3">
-                                        <Icons.ArrowLeft className="me-1" />
-                                        Go Back
-                                    </Button>
-                                </Link>
-                            </>
+                            <GoBackButton alert={alert} url="/profile" />
                         ) : (
                             <>
                                 <h3>Update Password</h3>
@@ -81,7 +70,6 @@ function ChangePassword() {
                                     {formFields.map((field, key) => (
                                         <React.Fragment key={key}>
                                             <Form.Group className="mb-3">
-                                                {/* <Form.Label>Old Password</Form.Label> */}
                                                 <Form.Control
                                                     onChange={(e) =>
                                                         setData({ ...data, [e.target.name]: e.target.value })

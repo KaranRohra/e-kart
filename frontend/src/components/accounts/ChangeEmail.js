@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
-import * as Icons from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import { Context } from "App";
 import { updateUserAPI } from "services/apis/accounts";
+import GoBackButton from "components/common/GoBackButton";
 
 function ChangeEmail() {
     const context = React.useContext(Context);
@@ -48,17 +48,7 @@ function ChangeEmail() {
                 <Row>
                     <Col md={{ offset: 3, span: 7 }} lg={{ offset: 4, span: 5 }} xl={{ offset: 4, span: 4 }}>
                         {alert.variant === "success" ? (
-                            <>
-                                <Alert variant="success">
-                                    {alert.message} <Icons.CheckCircleFill className="me-1" />{" "}
-                                </Alert>
-                                <Link to="/profile">
-                                    <Button variant="success" className="mt-3">
-                                        <Icons.ArrowLeft className="me-1" />
-                                        Go Back
-                                    </Button>
-                                </Link>
-                            </>
+                            <GoBackButton alert={alert} url="profile" />
                         ) : (
                             <>
                                 <h3>Update Email</h3>

@@ -2,10 +2,10 @@ import React from "react";
 import { Form, Button, Col, Row, Container, Alert } from "react-bootstrap";
 import { State, City } from "country-state-city";
 import { useParams, Link } from "react-router-dom";
-import * as Icons from "react-bootstrap-icons";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import { Context } from "App";
 import { createUserAddressAPI, getUserAddressByIdAPI, updateUserAddressAPI } from "services/apis/accounts";
+import GoBackButton from "components/common/GoBackButton";
 
 function AddOrUpdateAddress() {
     const [address, setAddress] = React.useState({});
@@ -87,17 +87,7 @@ function AddOrUpdateAddress() {
             ) : (
                 <>
                     {alert.variant === "success" ? (
-                        <div>
-                            <Alert variant="success">
-                                {alert.message} <Icons.CheckCircleFill className="me-1" />
-                            </Alert>
-                            <Link to="/profile">
-                                <Button variant="success" className="mt-3">
-                                    <Icons.ArrowLeft className="me-1" />
-                                    Go Back
-                                </Button>
-                            </Link>
-                        </div>
+                        <GoBackButton alert={alert} url="/profile" />
                     ) : (
                         <Form onSubmit={handleSubmit}>
                             <Row>
