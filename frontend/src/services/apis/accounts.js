@@ -59,3 +59,37 @@ export const sendPasswordResetLinkAPI = async (data) => {
     });
     return response;
 };
+
+export const getUserAddressAPI = async () => {
+    const response = await baseTemplate({
+        url: "/accounts/address/",
+        method: "GET",
+    });
+    return response;
+};
+
+export const getUserAddressByIdAPI = async ({ id }) => {
+    const response = await baseTemplate({
+        url: `/accounts/address/${id}/`,
+        method: "GET",
+    });
+    return response;
+};
+
+export const updateUserAddressAPI = async (data) => {
+    const response = await baseTemplate({
+        url: "/accounts/address/" + data.id + "/",
+        data: data,
+        method: "PATCH",
+    });
+    return response;
+};
+
+export const createUserAddressAPI = async (data) => {
+    const response = await baseTemplate({
+        url: "/accounts/address/",
+        data: data,
+        method: "POST",
+    });
+    return response;
+};

@@ -28,7 +28,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(models.Address)
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ("id", "user")
+    list_display = ("id", "user", "name")
     search_fields = ("email", "name")
     fieldsets = (
         ("Personal info", {"fields": ("user", "name")}),

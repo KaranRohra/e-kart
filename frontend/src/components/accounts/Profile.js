@@ -3,6 +3,7 @@ import BoxSpinner from "components/common/spinners/BoxSpinner";
 import Header from "components/header/Header";
 import React from "react";
 import { Container, Form, Row, Col, Button, Alert } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { setUser } from "services/actions/accounts";
 import { updateUserAPI } from "services/apis/accounts";
 import ViewAddresses from "./ViewAddresses";
@@ -17,17 +18,15 @@ function Profile() {
         const user = {
             first_name: event.target.firstName.value,
             last_name: event.target.lastName.value,
-            email: event.target.email.value,
-            phone_number: event.target.phoneNumber.value,
         };
         setLoading(true);
         const callAPI = async () => {
             const response = await updateUserAPI(user);
             if (response.status === 200) {
-                setAlert({ type: "success", message: "Profile updated successfully." });
+                setAlert({ type: "warning", message: "Profile updated successfully." });
                 context.dispatch(setUser(response.data));
             } else {
-                setAlert({ type: "warning", message: "Email is already exist." });
+                setAlert({ type: "danger", message: "Server Error, Try after some time." });
             }
 
             setLoading(false);
@@ -41,32 +40,12 @@ function Profile() {
             ) : (
                 <>
                     <Header />
-                    <Container className="border border-warning mt-2">
-                        <Container className="mt-3 border border-primary p-3">
+                    <Container className="border border-dark mt-2">
+                        <Container className="mt-3 border border-primary p-3 bg-dark text-light">
                             {alert && <Alert variant={alert.type}>{alert.message}</Alert>}
-                            <h1>Profile</h1>
+                            <h2>Personal Details</h2>
                             <hr />
                             <Form onSubmit={updateUserDetails}>
-                                <Row>
-                                    <Col>
-                                        <Form.Label>Email</Form.Label>
-                                        <Form.Control
-                                            placeholder="Email"
-                                            defaultValue={context.state.user.email}
-                                            name="email"
-                                            required
-                                        />
-                                    </Col>
-                                    <Col>
-                                        <Form.Label>Phone Number</Form.Label>
-                                        <Form.Control
-                                            placeholder="Phone number"
-                                            defaultValue={context.state.user.phone_number}
-                                            name="phoneNumber"
-                                            required
-                                        />
-                                    </Col>
-                                </Row>
                                 <Row className="mt-3">
                                     <Col>
                                         <Form.Label>First Name</Form.Label>
@@ -89,10 +68,19 @@ function Profile() {
                                 </Row>
                                 <Row className="mt-3">
                                     <Col>
-                                        <Button className="btn btn-primary">Change Password</Button>
+                                        <Link to="/change-password" as="button" className="btn btn-success m-1">
+                                            Change Password
+                                        </Link>
+                                        <Link to="/change-email" as="button" className="btn btn-danger m-1">
+                                            Change Email
+                                        </Link>
                                     </Col>
                                     <Col>
-                                        <Button type="submit" className="btn btn-primary" style={{ float: "right" }}>
+                                        <Button
+                                            type="submit"
+                                            className="btn btn-primary m-1"
+                                            style={{ float: "right" }}
+                                        >
                                             Save
                                         </Button>
                                     </Col>
