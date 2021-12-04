@@ -1,10 +1,4 @@
-import {
-    SET_COOKIE,
-    SET_USER,
-    ADD_PRODUCT_TO_CART,
-    REMOVE_PRODUCT_FROM_CART,
-    INIT_STATE,
-} from "services/reducers/constants";
+import { SET_COOKIE, SET_USER, INIT_STATE, UPDATE_CART, UPDATE_WISHLIST } from "services/reducers/constants";
 
 function reducer(state, action) {
     switch (action.type) {
@@ -18,7 +12,7 @@ function reducer(state, action) {
                 ...state,
                 cookies: action.data,
             };
-        case ADD_PRODUCT_TO_CART || REMOVE_PRODUCT_FROM_CART:
+        case UPDATE_CART:
             return {
                 ...state,
                 cart: action.data,
@@ -27,6 +21,11 @@ function reducer(state, action) {
             return {
                 ...state,
                 ...action.data,
+            };
+        case UPDATE_WISHLIST:
+            return {
+                ...state,
+                wishlist: action.data,
             };
         default:
             return state;

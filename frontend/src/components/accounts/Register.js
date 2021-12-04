@@ -8,6 +8,7 @@ import { createUserCartAPI } from "services/apis/cart";
 import { initializeState } from "init";
 import { INIT_STATE } from "services/reducers/constants";
 import { Context } from "App";
+import { createUserWishlistAPI } from "services/apis/wishlist";
 
 function Register() {
     const context = React.useContext(Context);
@@ -32,6 +33,7 @@ function Register() {
                 data["username"] = data.email;
                 await authenticateUserAPI(data);
                 createUserCartAPI(); // Creating a cart for the user
+                createUserWishlistAPI(); // Creating a wishlist for the user
 
                 const initialState = await initializeState();
                 context.dispatch({ type: INIT_STATE, data: initialState });

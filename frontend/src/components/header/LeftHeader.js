@@ -25,7 +25,7 @@ function LeftHeader() {
                 <NavDropdown title={state.user.first_name}>
                     <NavDropdown.Item onClick={() => history.push("/profile")}>Profile</NavDropdown.Item>
                     <NavDropdown.Item onClick={() => history.push("/orders")}>Orders</NavDropdown.Item>
-                    <NavDropdown.Item href="/wishlist">Wishlist</NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => history.push("/wishlist")}>Wishlist</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={handleSignOut}>Sign out</NavDropdown.Item>
                 </NavDropdown>

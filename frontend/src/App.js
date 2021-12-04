@@ -25,6 +25,7 @@ import { Spinner, Button } from "react-bootstrap";
 import ChangePassword from "components/accounts/ChangePassword";
 import ChangeEmail from "components/accounts/ChangeEmail";
 import AddOrUpdateAddress from "components/accounts/AddOrUpdateAddress";
+import Wishlist from "components/wishlist/Wishlist";
 
 export const Context = React.createContext();
 
@@ -97,6 +98,7 @@ function App() {
 
                             {/* ******** Private Routes ********  */}
                             <PrivateRoute exact path="/profile" component={Profile} />
+                            <PrivateRoute exact path="/wishlist" component={Wishlist} />
                             <PrivateRoute exact path="/cart" component={Cart} />
 
                             {/* ******** Not Found Route ********  */}

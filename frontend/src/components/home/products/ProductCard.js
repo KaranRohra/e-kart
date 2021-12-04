@@ -7,7 +7,7 @@ function ProductCard({ product }) {
 
     return (
         <Card
-            style={{ width: "18rem", cursor: "pointer" }}
+            style={{ width: "18rem", height: "18rem", cursor: "pointer" }}
             className="m-2"
             onClick={() => history.push(`/products/${product.id}`)}
         >
