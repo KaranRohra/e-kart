@@ -37,13 +37,3 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Product
         fields = "__all__"
-
-
-class WishListSerializer(serializers.ModelSerializer):
-    # products = serializers.PrimaryKeyRelatedField(many=True, queryset=models.Product.objects.all())
-    product = ProductSerializer(many=True, read_only=True)
-    user = accounts_serializers.UserSerializers()
-
-    class Meta:
-        model = models.WishList
-        fields = "__all__"

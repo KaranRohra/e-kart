@@ -9,6 +9,8 @@ import { Context } from "App";
 import { addProductToCart } from "services/actions/cart";
 import { addProductToCartAPI } from "services/apis/cart";
 import { isUserAuthenticated } from "services/apis/accounts";
+import { addProductToWishlist, removeProductFromWishlist } from "services/actions/wishlist";
+import { addProductToWishlistAPI, removeProductFromWishlistAPI } from "services/apis/wishlist";
 
 function SingleProductView() {
     const history = useHistory();
@@ -31,6 +33,23 @@ function SingleProductView() {
         const productToAdd = context.state.cart || {};
         productToAdd[product.id] = product;
         context.dispatch(addProductToCart(productToAdd));
+    };
+
+    const handleAddToWishlist = () => {
+        addProductToWishlistAPI(product.id);
+        const productToAdd = context.state.wishlist || {};
+        productToAdd[product.id] = product;
+        context.dispatch(addProductToWishlist(productToAdd));
+    };
+
+    const handleRemoveFromWishlist = () => {
+        removeProductFromWishlistAPI(product.id);
+        context.dispatch(
+            removeProductFromWishlist({
+                wishlist: context.state.wishlist,
+                productID: product.id,
+            })
+        );
     };
 
     return (
@@ -75,7 +94,24 @@ function SingleProductView() {
                         )}
                     </Col>
                     <Col className="m-3">
-                        <h6>{product.long_title}</h6>
+                        <Row style={{ display: "flex", justifyContent: "space-between" }}>
+                            <Col xs={11}>
+                                <h6>{product.long_title}</h6>
+                            </Col>
+                            <Col>
+                                {product.id in context.state.wishlist ? (
+                                    <Icons.HeartFill
+                                        onClick={handleRemoveFromWishlist}
+                                        style={{ color: "red", fontSize: 22, cursor: "pointer" }}
+                                    />
+                                ) : (
+                                    <Icons.Heart
+                                        onClick={handleAddToWishlist}
+                                        style={{ color: "red", fontSize: 22, cursor: "pointer" }}
+                                    />
+                                )}
+                            </Col>
+                        </Row>
                         <p className="mt-1 text-success">Extra ₹{product.actual_price - product.selling_price} off</p>
                         <div style={{ display: "flex" }}>
                             <h4>₹{product.selling_price}</h4>
