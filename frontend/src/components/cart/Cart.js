@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container, Badge } from "react-bootstrap";
+import { Container, Badge } from "react-bootstrap";
 import * as Icons from "react-bootstrap-icons";
 import ProductView from "components/cart/ProductView";
 import SubTotal from "components/cart/SubTotal";
@@ -9,12 +9,14 @@ import { addProductToCartAPI, getProductsFromCartAPI, removeProductFromCartAPI }
 import { addProductToCart, removeProductFromCart } from "services/actions/cart";
 import SkeletonLoader from "components/common/spinners/SkeletonLoader";
 import SaveForLater from "components/cart/SaveForLater";
+import { Link } from "react-router-dom";
 
 function Cart() {
     const context = React.useContext(Context);
     const [loading, setLoading] = React.useState(true);
     const [productsIDs, setProductsIDs] = React.useState([]);
     const [saveForLaterProducts, setSaveForLaterProducts] = React.useState({});
+    const numberOfProductInCart = Object.keys(context.state.cart).length;
 
     React.useEffect(() => {
         document.title = "Cart";
@@ -90,11 +92,15 @@ function Cart() {
                                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                                     <h5 variant="primary">
                                         <Badge bg="secondary">
-                                            {Object.keys(context.state.cart).length} {"  "}
+                                            {numberOfProductInCart}
                                             <Icons.Cart />
                                         </Badge>
                                     </h5>
-                                    <Button>Place Order</Button>
+                                    {numberOfProductInCart !== 0 && (
+                                        <Link to="/review-order" className="btn btn-primary">
+                                            Proceed
+                                        </Link>
+                                    )}
                                 </div>
                                 <hr />
                                 <ProductView
@@ -112,7 +118,7 @@ function Cart() {
                                 />
                             )}
                         </div>
-                        <div className="ms-5">
+                        <div>
                             <SubTotal />
                         </div>
                     </div>

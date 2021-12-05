@@ -26,6 +26,7 @@ import ChangePassword from "components/accounts/ChangePassword";
 import ChangeEmail from "components/accounts/ChangeEmail";
 import AddOrUpdateAddress from "components/accounts/AddOrUpdateAddress";
 import Wishlist from "components/wishlist/Wishlist";
+import ReviewOrder from "components/orders/ReviewOrder";
 
 export const Context = React.createContext();
 
@@ -100,6 +101,7 @@ function App() {
                             <PrivateRoute exact path="/profile" component={Profile} />
                             <PrivateRoute exact path="/wishlist" component={Wishlist} />
                             <PrivateRoute exact path="/cart" component={Cart} />
+                            <PrivateRoute exact path="/review-order" component={ReviewOrder} />
 
                             {/* ******** Not Found Route ********  */}
                             <Route path="*" component={PageNotFound} />

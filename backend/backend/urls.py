@@ -25,6 +25,7 @@ urlpatterns = [
     path("accounts/", include("accounts.urls"), name="accounts"),
     path("products/", include("products.urls"), name="products"),
     path("cart/", include("cart.urls"), name="cart"),
+    path("orders/", include("orders.urls"), name="orders"),
 ]
 
 # Url for files

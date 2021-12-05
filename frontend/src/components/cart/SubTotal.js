@@ -27,7 +27,7 @@ function SubTotal() {
     }
 
     return (
-        <Card bg="light" text="dark" style={{ width: "18rem" }}>
+        <Card bg="light" text="dark" style={{ width: "18rem" }} className="ms-5">
             {Object.keys(context.state.cart).length === 0 ? (
                 <>
                     <Card.Header>
