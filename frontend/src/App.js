@@ -27,6 +27,7 @@ import ChangeEmail from "components/accounts/ChangeEmail";
 import AddOrUpdateAddress from "components/accounts/AddOrUpdateAddress";
 import Wishlist from "components/wishlist/Wishlist";
 import ReviewOrder from "components/orders/ReviewOrder";
+import OrderDetails from "components/orders/OrderDetails";
 
 export const Context = React.createContext();
 
@@ -73,23 +74,6 @@ function App() {
                                 <SingleProductView />
                                 <Footer />
                             </Route>
-                            <Route exact path="/orders">
-                                <Header />
-                                <Order />
-                                <Footer />
-                            </Route>
-                            <Route exact path="/change-password">
-                                <ChangePassword />
-                            </Route>
-                            <Route exact path="/change-email">
-                                <ChangeEmail />
-                            </Route>
-                            <Route exact path="/edit-address/:id">
-                                <AddOrUpdateAddress />
-                            </Route>
-                            <Route exact path="/add-address">
-                                <AddOrUpdateAddress />
-                            </Route>
 
                             {/* ******** Auth Routes ********  */}
                             <AuthRoute exact path="/login" component={Login} />
@@ -102,6 +86,12 @@ function App() {
                             <PrivateRoute exact path="/wishlist" component={Wishlist} />
                             <PrivateRoute exact path="/cart" component={Cart} />
                             <PrivateRoute exact path="/review-order" component={ReviewOrder} />
+                            <PrivateRoute exact path="/orders/:id" component={OrderDetails} />
+                            <PrivateRoute exact path="/orders" component={Order} />
+                            <PrivateRoute exact path="/change-email" component={ChangeEmail} />
+                            <PrivateRoute exact path="/change-password" component={ChangePassword} />
+                            <PrivateRoute exact path="/add-address" component={AddOrUpdateAddress} />
+                            <PrivateRoute exact path="/edit-address/:id" component={AddOrUpdateAddress} />
 
                             {/* ******** Not Found Route ********  */}
                             <Route path="*" component={PageNotFound} />

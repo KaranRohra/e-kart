@@ -24,7 +24,7 @@ function Wishlist() {
     return (
         <>
             <Header />
-            <Container className="pb-2 pt-5 bg-light">
+            <Container className="pb-2 pt-5">
                 {Object.keys(products).length > 0 ? (
                     <>
                         {Object.keys(products).map((productID, key) => {
@@ -33,7 +33,7 @@ function Wishlist() {
                                 <React.Fragment key={key}>
                                     <div
                                         style={{ display: "flex", padding: 24 }}
-                                        className="mb-4 d-flex justify-content-start border border-dark"
+                                        className="mb-4 d-flex justify-content-start bg-light"
                                     >
                                         {/* Product Image */}
                                         <div style={{ width: 112, height: 78.5 }}>

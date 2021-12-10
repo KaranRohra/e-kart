@@ -32,11 +32,9 @@ class WishlistAPI(views.APIView):
 
     def get(self, request):
         product = request.user.wishlist.product.all()
-        serializer = serializers.ProductSerializer(product, many=True)
-        for product in serializer.data:
-            for image in product["images"]:
-                image["image_url"] = request.build_absolute_uri(image["image_url"])
-        return Response(serializer.data)
+        data = serializers.ProductSerializer(product, many=True).data
+        get_absolute_url(request, data)
+        return Response(data)
 
     def put(self, request):
         product_id = request.data.get("id")
@@ -51,3 +49,9 @@ class WishlistAPI(views.APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Product id is required"})
         request.user.wishlist.product.remove(product_id)
         return Response(status=status.HTTP_200_OK, data={"message": "Product removed from wishlist"})
+
+
+def get_absolute_url(request, data):
+    for product in data:
+        for image in product["images"]:
+            image["image_url"] = request.build_absolute_uri(image["image_url"])

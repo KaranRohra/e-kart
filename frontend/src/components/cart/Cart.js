@@ -93,7 +93,7 @@ function Cart() {
                                     <h5 variant="primary">
                                         <Badge bg="secondary">
                                             {numberOfProductInCart}
-                                            <Icons.Cart />
+                                            <Icons.Cart className="ms-1" />
                                         </Badge>
                                     </h5>
                                     {numberOfProductInCart !== 0 && (

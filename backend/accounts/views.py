@@ -13,7 +13,7 @@ from rest_framework.response import Response
 
 
 class RegisterAPI(generics.CreateAPIView):
-    serializer_class = serializers.UserSerializers
+    serializer_class = serializers.UserSerializer
     queryset = models.User.objects.all()
 
 
@@ -22,7 +22,7 @@ class UserAPI(views.APIView):
     authentication_classes = (authentication.TokenAuthentication,)
 
     def get(self, request):
-        serializer = serializers.UserSerializers(request.user)
+        serializer = serializers.UserSerializer(request.user)
         return Response(serializer.data)
 
     def patch(self, request):
@@ -56,7 +56,7 @@ class UserAPI(views.APIView):
                 request.user.save()
                 return Response({"message": "Email changed successfully"}, status=status.HTTP_200_OK)
         else:
-            user = serializers.UserSerializers(instance=request.user, data=request.data, partial=True)
+            user = serializers.UserSerializer(instance=request.user, data=request.data, partial=True)
             if user.is_valid():
                 user.save()
                 return self.get(request)
@@ -100,7 +100,7 @@ class AddressAPI(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (authentication.TokenAuthentication,)
     queryset = models.Address.objects.all()
-    serializer_class = serializers.AddressSerializers
+    serializer_class = serializers.AddressSerializer
 
     def get_queryset(self):
         return models.Address.objects.filter(user=self.request.user, is_deleted=False)

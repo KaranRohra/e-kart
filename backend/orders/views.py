@@ -6,40 +6,20 @@ from django.http import Http404
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from orders import models
-from products import serializers as product_serializers
+from orders import serializers
 from rest_framework import authentication
 from rest_framework import permissions
-from rest_framework import views
+from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
-from rest_framework.response import Response
 
 
-class OrdersAPI(views.APIView):
+class OrdersAPI(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (authentication.TokenAuthentication,)
+    serializer_class = serializers.OrderSerializer
 
-    def get(self, request):
-        orders = models.Order.objects.filter(user=request.user)
-        orders_list = []
-        for order in orders:
-            orders_list.append(
-                {
-                    "id": order.id,
-                    "products": product_serializers.ProductSerializer(order.products).data,
-                    "address": order.address,
-                    "status": order.status,
-                }
-            )
-        return Response(orders_list)
-
-    def post(self, request):
-        products_ids = request.data.get("products_ids")
-        products = models.Product.objects.filter(id__in=products_ids)
-        order = models.Order(user=request.user)
-        order.products.set(products)
-        order.address = request.data.get("address")
-        order.save()
-        return Response(product_serializers.ProductSerializer(order.products).data)
+    def get_queryset(self):
+        return models.Order.objects.filter(user=self.request.user)
 
 
 razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
@@ -97,12 +77,14 @@ def paymenthandler(request, t, aid):
     }
     if result is None:
         amount, user = get_order_amount(t)
-        order = models.Order(
-            user=user,
-            address=accounts_models.Address.objects.get(id=aid),
-        )
-        order.save()
-        order.product.set(user.cart.products.all())
+        ordered_products = user.cart.products.all()
+        for product in ordered_products:
+            # TODO: product.quantity -= 1 Decrement quantity
+            order = models.Order.objects.create(
+                user=user, product=product, address=accounts_models.Address.objects.get(id=aid)
+            )
+            product.save()
+            order.save()
         user.cart.products.clear()
         try:
             razorpay_client.payment.capture(payment_id, amount)

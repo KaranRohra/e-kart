@@ -14,7 +14,7 @@ function ReviewOrder() {
 
     return (
         <>
-            {Object.keys(context.state.cart) > 0 ? (
+            {Object.keys(context.state.cart).length > 0 ? (
                 <Container className="mt-5">
                     <Row style={{ display: "flex" }}>
                         <Col xs={8}>
