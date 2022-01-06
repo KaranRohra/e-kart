@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "accounts",
     "products",
     "cart",
+    "orders",
 ]
 
 MIDDLEWARE = [
@@ -158,3 +159,7 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 # File Uploading
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
+
+# Razorpay settings
+RAZOR_KEY_ID = "rzp_test_bCqpiV2DKi8pOz"
+RAZOR_KEY_SECRET = "qrSsrXqlUp8VJMMk7DnlFSDY"

@@ -32,7 +32,6 @@ function SaveForLater(props) {
                             <Link style={{ textDecoration: "none" }} to={`/products/${productID}`}>
                                 <h6>{props.products[productID].long_title}</h6>{" "}
                             </Link>
-                            <small className="text-secondary">{props.products[productID].tagline}</small> <br />
                             <small className="text-secondary">
                                 Seller: {props.products[productID].seller.first_name}{" "}
                                 {props.products[productID].seller.last_name}
@@ -46,7 +45,7 @@ function SaveForLater(props) {
                             <p
                                 onClick={() => props.handleMoveToCart(productID)}
                                 className="text-success"
-                                style={{ textDecoration: "underline", cursor: "pointer" }}
+                                style={{ textDecoration: "underline", cursor: "pointer", width: 100 }}
                             >
                                 Move to Cart
                             </p>

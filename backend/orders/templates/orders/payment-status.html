@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{% static 'style/payment-status.css' %}">
+        <title>Payment Staus</title>
+    </head>
+    <body>
+        <div>
+            {% if payment_status == "SUCCESS" %}
+            <div class="success-page">
+                <img  src="http://share.ashiknesin.com/green-checkmark.png" class="center" alt="" />
+                <h2 class="success-text">Payment Successful !</h2>
+                <p>We are delighted to inform you that we received your payments</p>
+                <a href="{{orders_url}}" class="btn-view-orders">View Orders</a>
+                <a href="{{home_url}}">Continue Shopping</a>
+            </div>
+            {% else %}
+            <div class="success-page">
+                <img  src="http://share.ashiknesin.com/green-checkmark.png" class="center" alt="" />
+                <h2 class="failure-text">Payment Failure !</h2>
+                <p>We are sadly, to inform you that your payment is Failed, your money will refunded if it deducted</p>
+                <a href="{{order_again_url}}" class="btn-view-orders">Order gain</a>
+                <a href="{{home_url}}">Continue Shopping</a>
+            </div>
+            {% endif %}
+        </div>
+    </body>
+</html>

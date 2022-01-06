@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import Selector from "components/cart/Selector";
 
 function ProductView(props) {
     return (
@@ -10,13 +9,15 @@ function ProductView(props) {
                 <>
                     {props.productsIDs.map((productID, key) => (
                         <React.Fragment key={key}>
-                            <Button
-                                onClick={() => props.handleRemoveProductFromCart(productID)}
-                                variant="secondary"
-                                style={{ float: "right" }}
-                            >
-                                Remove
-                            </Button>
+                            {!props.hideRemoveButton && (
+                                <Button
+                                    onClick={() => props.handleRemoveProductFromCart(productID)}
+                                    variant="secondary"
+                                    style={{ float: "right" }}
+                                >
+                                    Remove
+                                </Button>
+                            )}
                             <div style={{ display: "flex" }} className="pt-2 pe-2 ps-2">
                                 {/* Product Image */}
                                 <div style={{ width: 112, height: 78.5 }}>
@@ -25,14 +26,13 @@ function ProductView(props) {
                                         src={props.products[productID].images[0].image_url}
                                         alt=""
                                     />
-                                    <Selector product={props.products[productID]} />
+                                    {/* <Selector product={props.products[productID]} /> */}
                                 </div>
                                 {/* Product Details */}
                                 <div className="ms-3">
                                     <Link style={{ textDecoration: "none" }} to={`/products/${productID}`}>
                                         <h6>{props.products[productID].long_title}</h6>{" "}
                                     </Link>
-                                    <small className="text-secondary">{props.products[productID].tagline}</small> <br />
                                     <small className="text-secondary">
                                         Seller: {props.products[productID].seller.first_name}{" "}
                                         {props.products[productID].seller.last_name}
@@ -45,13 +45,15 @@ function ProductView(props) {
                                             ₹{props.products[productID].actual_price}
                                         </strike>
                                     </div>
-                                    <p
-                                        onClick={() => props.handleSaveForLater(productID)}
-                                        className="text-danger"
-                                        style={{ textDecoration: "underline", cursor: "pointer" }}
-                                    >
-                                        Save for later
-                                    </p>
+                                    {!props.hideSaveForLater && (
+                                        <p
+                                            onClick={() => props.handleSaveForLater(productID)}
+                                            className="text-danger"
+                                            style={{ textDecoration: "underline", cursor: "pointer", width: 100 }}
+                                        >
+                                            Save for later
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                             <hr />
