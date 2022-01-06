@@ -1,9 +1,15 @@
+from functools import reduce
+
 import razorpay
 from accounts import models as accounts_models
 from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
 from django.db.models import Sum
 from django.http import Http404
 from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.utils import timezone
+from django.utils.html import strip_tags
 from django.views.decorators.csrf import csrf_exempt
 from orders import models
 from orders import serializers
@@ -20,6 +26,17 @@ class OrdersAPI(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return models.Order.objects.filter(user=self.request.user)
+
+    def partial_update(self, request, pk=None):
+        instance = self.get_object()
+        instance.status = request.data.get("status")
+        send_order_status_email(
+            orders=[instance],
+            address=instance.address,
+            user=request.user,
+            subject=f"Order {instance.status}",
+        )
+        return super().partial_update(request, pk=pk)
 
 
 razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
@@ -78,18 +95,55 @@ def paymenthandler(request, t, aid):
     if result is None:
         amount, user = get_order_amount(t)
         ordered_products = user.cart.products.all()
+        orders = []
         for product in ordered_products:
             # TODO: product.quantity -= 1 Decrement quantity
             order = models.Order.objects.create(
                 user=user, product=product, address=accounts_models.Address.objects.get(id=aid)
             )
-            product.save()
+            orders.append(order)
             order.save()
         user.cart.products.clear()
         try:
+            send_order_status_email(orders, orders[0].address, user)
             razorpay_client.payment.capture(payment_id, amount)
         except Exception:
             # If this executes, the payment was already captured
             return render(request, template_name, context={"payment_status": "SUCCESS", **context})
         return render(request, template_name, context={"payment_status": "SUCCESS", **context})
     return render(request, template_name, context={"payment_status": "FAILED", **context})
+
+
+def send_order_status_email(orders, address, user, subject="Order Confirmed"):
+    status = subject.split()[1]
+    shipping_charges = reduce(lambda x, y: x + y.product.shipping_fee, orders, 0)
+    subtotal = reduce(lambda x, y: x + y.product.selling_price, orders, 0)
+    context = {
+        "home_url": settings.CORS_ALLOWED_ORIGINS[0],
+        "my_orders_url": settings.CORS_ALLOWED_ORIGINS[0] + "/orders",
+        "orders": orders,
+        "address": address,
+        "shipping_charges": shipping_charges,
+        "subtotal": subtotal,
+        "payable_amount": subtotal + shipping_charges,
+        "login_user": user,
+        "status": status,
+        "subject": subject,
+    }
+    if status == "Confirmed":
+        context["delivery_date"] = (orders[0].created_at + timezone.timedelta(days=7)).date
+
+    html_content = render_to_string("orders/email.html", context=context)
+    text_content = strip_tags(html_content)
+    email = EmailMultiAlternatives(
+        # subject
+        subject,
+        # message
+        text_content,
+        # from
+        settings.EMAIL_HOST_USER,
+        # to
+        [user.email],
+    )
+    email.attach_alternative(html_content, "text/html")
+    email.send()

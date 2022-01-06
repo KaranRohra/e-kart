@@ -1,0 +1,403 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- CSS only -->
+        <style>
+            :root {
+                --bs-blue: #0d6efd;
+                --bs-indigo: #6610f2;
+                --bs-purple: #6f42c1;
+                --bs-pink: #d63384;
+                --bs-red: #dc3545;
+                --bs-orange: #fd7e14;
+                --bs-yellow: #ffc107;
+                --bs-green: #198754;
+                --bs-teal: #20c997;
+                --bs-cyan: #0dcaf0;
+                --bs-white: #fff;
+                --bs-gray: #6c757d;
+                --bs-gray-dark: #343a40;
+                --bs-gray-100: #f8f9fa;
+                --bs-gray-200: #e9ecef;
+                --bs-gray-300: #dee2e6;
+                --bs-gray-400: #ced4da;
+                --bs-gray-500: #adb5bd;
+                --bs-gray-600: #6c757d;
+                --bs-gray-700: #495057;
+                --bs-gray-800: #343a40;
+                --bs-gray-900: #212529;
+                --bs-primary: #0d6efd;
+                --bs-secondary: #6c757d;
+                --bs-success: #198754;
+                --bs-info: #0dcaf0;
+                --bs-warning: #ffc107;
+                --bs-danger: #dc3545;
+                --bs-light: #f8f9fa;
+                --bs-dark: #212529;
+                --bs-primary-rgb: 13, 110, 253;
+                --bs-secondary-rgb: 108, 117, 125;
+                --bs-success-rgb: 25, 135, 84;
+                --bs-info-rgb: 13, 202, 240;
+                --bs-warning-rgb: 255, 193, 7;
+                --bs-danger-rgb: 220, 53, 69;
+                --bs-light-rgb: 248, 249, 250;
+                --bs-dark-rgb: 33, 37, 41;
+                --bs-white-rgb: 255, 255, 255;
+                --bs-black-rgb: 0, 0, 0;
+                --bs-body-color-rgb: 33, 37, 41;
+                --bs-body-bg-rgb: 255, 255, 255;
+                --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI",
+                    Roboto, "Helvetica Neue", Arial, "Noto Sans",
+                    "Liberation Sans", sans-serif, "Apple Color Emoji",
+                    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+                    "Liberation Mono", "Courier New", monospace;
+                --bs-gradient: linear-gradient(
+                    180deg,
+                    rgba(255, 255, 255, 0.15),
+                    rgba(255, 255, 255, 0)
+                );
+                --bs-body-font-family: var(--bs-font-sans-serif);
+                --bs-body-font-size: 1rem;
+                --bs-body-font-weight: 400;
+                --bs-body-line-height: 1.5;
+                --bs-body-color: #212529;
+                --bs-body-bg: #fff;
+            }
+            *,
+            ::after,
+            ::before {
+                box-sizing: border-box;
+            }
+            @media (prefers-reduced-motion: no-preference) {
+                :root {
+                    scroll-behavior: smooth;
+                }
+            }
+
+            .container,
+            .container-fluid,
+            .container-lg,
+            .container-md,
+            .container-sm,
+            .container-xl,
+            .container-xxl {
+                width: 100%;
+                padding-right: var(--bs-gutter-x, 0.75rem);
+                padding-left: var(--bs-gutter-x, 0.75rem);
+                margin-right: auto;
+                margin-left: auto;
+            }
+            @media (min-width: 576px) {
+                .container,
+                .container-sm {
+                    max-width: 540px;
+                }
+            }
+            @media (min-width: 768px) {
+                .container,
+                .container-md,
+                .container-sm {
+                    max-width: 720px;
+                }
+            }
+            @media (min-width: 992px) {
+                .container,
+                .container-lg,
+                .container-md,
+                .container-sm {
+                    max-width: 960px;
+                }
+            }
+            @media (min-width: 1200px) {
+                .container,
+                .container-lg,
+                .container-md,
+                .container-sm,
+                .container-xl {
+                    max-width: 1140px;
+                }
+            }
+            @media (min-width: 1400px) {
+                .container,
+                .container-lg,
+                .container-md,
+                .container-sm,
+                .container-xl,
+                .container-xxl {
+                    max-width: 1320px;
+                }
+            }
+
+            .card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 1px solid rgba(0, 0, 0, 0.125);
+                border-radius: 0.25rem;
+            }
+
+            .card-header {
+                padding: 0.5rem 1rem;
+                margin-bottom: 0;
+                background-color: rgba(0, 0, 0, 0.03);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+            }
+            .card-header:first-child {
+                border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+            }
+
+            .m-4 {
+                margin: 1.5rem !important;
+            }
+
+            .text-secondary {
+                --bs-text-opacity: 1;
+                color: rgba(
+                    var(--bs-secondary-rgb),
+                    var(--bs-text-opacity)
+                ) !important;
+            }
+
+            .btn-primary {
+                color: #fff;
+                background-color: #0d6efd;
+                border-color: #0d6efd;
+            }
+
+            .border {
+                border: 1px solid #dee2e6 !important;
+            }
+
+            .border-primary {
+                border-color: #0d6efd !important;
+            }
+
+            .p-1 {
+                padding: 0.25rem !important;
+            }
+            .p-2 {
+                padding: 0.5rem !important;
+            }
+            .p-3 {
+                padding: 1rem !important;
+            }
+            .p-4 {
+                padding: 1.5rem !important;
+            }
+            .p-5 {
+                padding: 3rem !important;
+            }
+            .m-1 {
+                margin: 0.25rem !important;
+            }
+            .m-2 {
+                margin: 0.5rem !important;
+            }
+            .m-3 {
+                margin: 1rem !important;
+            }
+            .m-4 {
+                margin: 1.5rem !important;
+            }
+            .m-5 {
+                margin: 3rem !important;
+            }
+
+            .table {
+                --bs-table-bg: transparent;
+                --bs-table-accent-bg: transparent;
+                --bs-table-striped-color: #212529;
+                --bs-table-striped-bg: rgba(0, 0, 0, 0.05);
+                --bs-table-active-color: #212529;
+                --bs-table-active-bg: rgba(0, 0, 0, 0.1);
+                --bs-table-hover-color: #212529;
+                --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
+                width: 100%;
+                margin-bottom: 1rem;
+                color: #212529;
+                vertical-align: top;
+                border-color: #dee2e6;
+            }
+
+            .table > :not(caption) > * > * {
+                padding: 0.5rem 0.5rem;
+                background-color: var(--bs-table-bg);
+                border-bottom-width: 1px;
+                box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+            }
+            .table > tbody {
+                vertical-align: inherit;
+            }
+
+            .table > thead {
+                vertical-align: bottom;
+            }
+
+            .text-end {
+                text-align: right !important;
+            }
+
+            a {
+                color: #0d6efd;
+                text-decoration: underline;
+            }
+            a:hover {
+                color: #0a58ca;
+            }
+            a:not([href]):not([class]),
+            a:not([href]):not([class]):hover {
+                color: inherit;
+                text-decoration: none;
+            }
+        </style>
+        <title>EKart Email Test</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="card" style="width: 50rem">
+                <div>
+                    <div class="m-4">
+                        <h3 class="text-secondary" style="font-weight: bold">
+                            {{subject}} <br />
+                            <button
+                                disabled
+                                class="btn-primary border border-primary"
+                                style="height: 5px; width: 200px"
+                            />
+                        </h3>
+                    </div>
+                    <div class="m-4 text-secondary">
+                        <p>Hey {{login_user.first_name}},</p>
+
+                        <p>
+                            <span>
+                                Thank you for shopping with us. Your order has
+                                been {{status}}.
+                            </span>
+                        </p>
+                        {% if delivery_date %}
+                        <p>
+                            Now all you have to do is sit back and relax, while
+                            we work our magic to get your order to you ASAP! We
+                            will keep you posted on the movement of your order.
+                        </p>
+                        {% endif %}
+                        <p>
+                            For more details, please go to
+                            <a href="{{my_orders_url}}"> My orders</a>.
+                        </p>
+                        <p>
+                            Thank you for shopping at
+                            <a href="{{home_url}}">Ekart.com</a>. We hope you
+                            continue to rock with us!
+                        </p>
+                    </div>
+                    {% if delivery_date %}
+                    <div class="m-4">
+                        <span class="p-2 border border-primary">
+                            Estimated Delivery
+                        </span>
+                        <span class="p-2 border border-primary">
+                            {{delivery_date}}
+                        </span>
+                    </div>
+
+                    <div class="m-4 text-secondary">
+                        <h4 class="text-secondary" style="font-weight: bold">
+                            Shipping/Billing Address:
+                        </h4>
+                        <p>
+                            {{address.name}} <br />
+                            {{address.address_line_1}},
+                            {{address.address_line_2}}<br />
+                            {{address.state}} <br />
+                            {{address.city}} - {{address.pincode}}
+                            <br />
+                            India
+                        </p>
+                        <h4 class="text-secondary" style="font-weight: bold">
+                            Phone:
+                        </h4>
+                        <p>
+                            {{address.phone_number_1}} <br />
+                            {{address.phone_number_2}}
+                        </p>
+                    </div>
+                    {% endif %}
+                    <div
+                        class="m-4 p-3 text-secondary"
+                        style="border: 5px solid lightgrey"
+                    >
+                        <h3>Order Summary</h3>
+                        <table class="table" border="2">
+                            <tr>
+                                <td colspan="2">Product</td>
+                                <td>Price</td>
+                            </tr>
+                            <tbody>
+                                {% for order in orders %}
+
+                                <tr>
+                                    <td
+                                        style="
+                                            width: 112px;
+                                            height: 78.5px;
+                                            padding: 5px;
+                                        "
+                                    >
+                                        <img
+                                            style="
+                                                width: 100%;
+                                                height: 100%;
+                                                objectfit: contain;
+                                            "
+                                            src="{{order.product.images.0.image_url}}"
+                                            alt=""
+                                        />
+                                    </td>
+                                    <td style="padding-left: 5px">
+                                        {{order.product.short_title}}
+                                    </td>
+                                    <td style="padding-left: 5px">
+                                        ₹{{order.product.selling_price}}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" class="text-end pe-5">
+                                        Subtotal
+                                    </td>
+                                    <td>₹{{subtotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-end pe-5">
+                                        Shipping Charges
+                                    </td>
+                                    <td>₹{{shipping_charges}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-end pe-5">
+                                        <h4>Payable Amount</h4>
+                                    </td>
+                                    <td>
+                                        <h4>₹{{payable_amount}}</h4>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

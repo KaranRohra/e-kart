@@ -16,7 +16,7 @@ class ProductPagination(pagination.PageNumberPagination):
 
 class ProductAPI(viewsets.ModelViewSet):
     serializer_class = serializers.ProductSerializer
-    queryset = models.Product.objects.all()
+    queryset = models.Product.objects.all().order_by("?")
     pagination_class = ProductPagination
 
 
