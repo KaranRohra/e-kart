@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Card, Button } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import { Link } from "react-router-dom";
 import { getUserAddressAPI, updateUserAddressAPI } from "services/apis/accounts";
@@ -13,7 +13,9 @@ function ViewAddresses(props) {
             setLoading(true);
             const response = await getUserAddressAPI();
             setAddresses(response.data);
-            props.setSelectedAddress && props.setSelectedAddress(response.data[0].id);
+            if (props.setSelectedAddress && response.data[0]) {
+                props.setSelectedAddress(response.data[0].id);
+            }
             setLoading(false);
         };
         fetchData();
@@ -32,22 +34,18 @@ function ViewAddresses(props) {
     };
 
     return (
-        <Container className="mt-3 mb-3 p-3">
+        <div className="mt-3 mb-3 pt-3">
             {loading ? (
                 <BoxSpinner />
             ) : (
                 <>
-                    {!props.hideHeader && (
-                        <>
-                            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                <h3>Address</h3>
-                                <Link to="/add-address" as="button" className="btn btn-primary">
-                                    + Add Address
-                                </Link>
-                            </div>
-                            <hr />
-                        </>
-                    )}
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <h3 className="m-1">Address</h3>
+                        <Link to="/add-address" as="button" className="btn btn-primary">
+                            + Add Address
+                        </Link>
+                    </div>
+                    <hr />
 
                     {Object.keys(addresses).length !== 0 && (
                         <div style={{ display: "flex" }}>
@@ -94,7 +92,7 @@ function ViewAddresses(props) {
                     )}
                 </>
             )}
-        </Container>
+        </div>
     );
 }
 

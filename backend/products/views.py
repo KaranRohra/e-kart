@@ -24,12 +24,6 @@ class WishlistAPI(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (authentication.TokenAuthentication,)
 
-    def post(self, request):
-        whishlist = models.WishList()
-        whishlist.user = request.user
-        whishlist.save()
-        return Response(status=status.HTTP_201_CREATED)
-
     def get(self, request):
         product = request.user.wishlist.product.all()
         data = serializers.ProductSerializer(product, many=True).data

@@ -26,10 +26,3 @@ export const removeProductFromWishlistAPI = async (productId) => {
         },
     });
 };
-
-export const createUserWishlistAPI = async () => {
-    return await baseTemplate({
-        url: "/products/wishlist/",
-        method: "POST",
-    });
-};

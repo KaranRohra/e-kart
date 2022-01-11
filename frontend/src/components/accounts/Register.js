@@ -2,16 +2,10 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import BaseForm from "components/accounts/BaseForm";
-import { authenticateUserAPI, createUserAPI } from "services/apis/accounts";
+import { createUserAPI } from "services/apis/accounts";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
-import { createUserCartAPI } from "services/apis/cart";
-import { initializeState } from "init";
-import { INIT_STATE } from "services/reducers/constants";
-import { Context } from "App";
-import { createUserWishlistAPI } from "services/apis/wishlist";
 
 function Register() {
-    const context = React.useContext(Context);
     const [loading, setLoading] = React.useState(false);
     const [alert, setAlert] = React.useState(null);
     const [data, setData] = React.useState({});
@@ -30,15 +24,7 @@ function Register() {
         const callAPI = async () => {
             const response = await createUserAPI(data);
             if (response.data) {
-                data["username"] = data.email;
-                await authenticateUserAPI(data);
-                createUserCartAPI(); // Creating a cart for the user
-                createUserWishlistAPI(); // Creating a wishlist for the user
-
-                const initialState = await initializeState();
-                context.dispatch({ type: INIT_STATE, data: initialState });
-
-                history.push("/");
+                history.push("/login");
                 return;
             } else {
                 setAlert({

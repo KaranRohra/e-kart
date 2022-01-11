@@ -34,6 +34,7 @@ export const Context = React.createContext();
 const initialState = {
     user: {},
     cart: {},
+    wishlist: {},
 };
 
 function App() {

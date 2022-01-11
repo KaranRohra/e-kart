@@ -1,13 +1,5 @@
 import baseTemplate from "services/apis/baseTemplate";
 
-export const createUserCartAPI = async () => {
-    const response = await baseTemplate({
-        url: "/cart/",
-        method: "POST",
-    });
-    return response;
-};
-
 export const addProductToCartAPI = async (data) => {
     const response = await baseTemplate({
         url: "/cart/",
