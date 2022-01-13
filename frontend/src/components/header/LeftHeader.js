@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Nav, NavDropdown } from "react-bootstrap";
 import { isUserAuthenticated } from "services/apis/accounts";
 import { Context } from "App";
-import { setUser } from "services/actions/accounts";
+import { EMPTY_STATE } from "services/reducers/constants";
 
 function LeftHeader() {
     const { state, dispatch } = React.useContext(Context);
@@ -15,7 +15,7 @@ function LeftHeader() {
 
     const handleSignOut = () => {
         cookies.remove("token");
-        dispatch(setUser({}));
+        dispatch({ type: EMPTY_STATE });
     };
 
     return (

@@ -25,7 +25,7 @@ class OrdersAPI(viewsets.ModelViewSet):
     serializer_class = serializers.OrderSerializer
 
     def get_queryset(self):
-        return models.Order.objects.filter(user=self.request.user)
+        return models.Order.objects.filter(user=self.request.user).order_by("-created_at")
 
     def partial_update(self, request, pk=None):
         instance = self.get_object()

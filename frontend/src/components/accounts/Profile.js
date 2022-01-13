@@ -87,7 +87,7 @@ function Profile() {
                                 </Row>
                             </Form>
                         </Container>
-                        <ViewAddresses />
+                        <ViewAddresses showEditAndDeleteButtons />
                     </Container>
                 </>
             )}

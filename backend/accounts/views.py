@@ -1,7 +1,9 @@
 from accounts import models
 from accounts import serializers
+from cart import models as cart_models
 from django.conf import settings
 from django.http.response import JsonResponse
+from products import models as product_models
 from rest_framework import authentication
 from rest_framework import generics
 from rest_framework import permissions
@@ -15,6 +17,18 @@ from rest_framework.response import Response
 class RegisterAPI(generics.CreateAPIView):
     serializer_class = serializers.UserSerializer
     queryset = models.User.objects.all()
+
+    def post(self, request):
+        response = self.create(request)
+        user = models.User.objects.get(email=response.data["email"])
+        models_to_create = (
+            product_models.WishList(user=user),
+            cart_models.Cart(user=user),
+            cart_models.SaveForLater(user=user),
+        )
+        for model in models_to_create:
+            model.save()
+        return response
 
 
 class UserAPI(views.APIView):

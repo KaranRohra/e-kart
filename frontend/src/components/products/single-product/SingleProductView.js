@@ -59,7 +59,7 @@ function SingleProductView() {
             ) : (
                 <Row>
                     <Col md={5} xs={12} className="m-3">
-                        <Carousel style={{ width: "550px" }}>
+                        <Carousel style={{ width: "550px" }} variant="dark">
                             {product.images.map((image, index) => (
                                 <Carousel.Item key={index} style={{ width: 500, height: 500 }}>
                                     <img
@@ -99,16 +99,20 @@ function SingleProductView() {
                                 <h6>{product.long_title}</h6>
                             </Col>
                             <Col>
-                                {product.id in context.state.wishlist ? (
-                                    <Icons.HeartFill
-                                        onClick={handleRemoveFromWishlist}
-                                        style={{ color: "red", fontSize: 22, cursor: "pointer" }}
-                                    />
-                                ) : (
-                                    <Icons.Heart
-                                        onClick={handleAddToWishlist}
-                                        style={{ color: "red", fontSize: 22, cursor: "pointer" }}
-                                    />
+                                {isUserAuthenticated() && (
+                                    <>
+                                        {product.id in context.state.wishlist ? (
+                                            <Icons.HeartFill
+                                                onClick={handleRemoveFromWishlist}
+                                                style={{ color: "red", fontSize: 22, cursor: "pointer" }}
+                                            />
+                                        ) : (
+                                            <Icons.Heart
+                                                onClick={handleAddToWishlist}
+                                                style={{ color: "red", fontSize: 22, cursor: "pointer" }}
+                                            />
+                                        )}
+                                    </>
                                 )}
                             </Col>
                         </Row>

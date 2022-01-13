@@ -1,4 +1,3 @@
-from cart import models
 from products import serializers
 from rest_framework import authentication
 from rest_framework import permissions
@@ -10,12 +9,6 @@ from rest_framework.views import APIView
 class CartAPIView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (authentication.TokenAuthentication,)
-
-    def post(self, request):
-        objects_to_create = (models.Cart(user=request.user), models.SaveForLater(user=request.user))
-        for obj in objects_to_create:
-            obj.save()
-        return Response(status=status.HTTP_201_CREATED)
 
     def get(self, request):
         if request.query_params.get("type") == "SAVE_FOR_LATER":
