@@ -11,7 +11,7 @@ function Banner() {
     ];
 
     return (
-        <Carousel className="p-3">
+        <Carousel className="p-3" variant="dark">
             {images.map((image, index) => (
                 <Carousel.Item key={index}>
                     <Link to="/">

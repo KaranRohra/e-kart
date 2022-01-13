@@ -70,18 +70,23 @@ function ViewAddresses(props) {
                                                 }}
                                             >
                                                 <Card.Text>
-                                                    {address.address_line_1}, <br />
+                                                    {address.address_line_1},<br />
                                                     {address.landmark}, {address.city}, <br />
                                                     {address.state} - {address.pincode}. <br />
                                                 </Card.Text>
-                                                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                                    <Link to={`edit-address/${address.id}`} className="btn btn-primary">
-                                                        Edit
-                                                    </Link>
-                                                    <Button onClick={() => deleteAddress(address)} variant="danger">
-                                                        Delete
-                                                    </Button>
-                                                </div>
+                                                {props.showEditAndDeleteButtons && (
+                                                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                                        <Link
+                                                            to={`edit-address/${address.id}`}
+                                                            className="btn btn-primary"
+                                                        >
+                                                            Edit
+                                                        </Link>
+                                                        <Button onClick={() => deleteAddress(address)} variant="danger">
+                                                            Delete
+                                                        </Button>
+                                                    </div>
+                                                )}
                                             </Card.Body>
                                         </Card>
                                     </Col>

@@ -25,6 +25,9 @@ function Wishlist() {
         <>
             <Header />
             <Container className="pb-2 pt-5">
+                <div className="p-2 ps-3 mb-2">
+                    <h4>My Wishlist ({Object.keys(products).length})</h4>
+                </div>
                 {Object.keys(products).length > 0 ? (
                     <>
                         {Object.keys(products).map((productID, key) => {
