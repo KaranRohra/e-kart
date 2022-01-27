@@ -6,4 +6,5 @@ route = routers.DefaultRouter()
 route.register("", views.ProductAPI, basename="products")
 urlpatterns = [
     path("wishlist/", views.WishlistAPI.as_view(), name="wishlist"),
+    path("recently-viewed/", views.RecentlyViewedAPI.as_view(), name="recently-view"),
 ] + route.urls

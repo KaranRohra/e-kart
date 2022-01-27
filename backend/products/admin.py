@@ -29,6 +29,7 @@ class SpecificationTitleAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.WishList)
+admin.site.register(models.RecentlyViewed)
 
 
 @admin.register(models.RatingAndReview)

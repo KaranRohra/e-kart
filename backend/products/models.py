@@ -84,7 +84,7 @@ class RatingAndReview(models.Model):
 
 
 class WishList(models.Model):
-    product = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product)
     user = models.OneToOneField(
         accounts_models.User, on_delete=models.CASCADE, related_name="wishlist", related_query_name="wishlist"
     )
@@ -94,3 +94,19 @@ class WishList(models.Model):
 
     class Meta:
         verbose_name_plural = "Wishlist"
+
+
+class RecentlyViewed(models.Model):
+    products = models.ManyToManyField(Product)
+    user = models.OneToOneField(
+        accounts_models.User,
+        on_delete=models.CASCADE,
+        related_name="recently_viewed",
+        related_query_name="recently_viewed",
+    )
+
+    def __str__(self):
+        return f"{self.id} __ {self.user}"
+
+    class Meta:
+        verbose_name_plural = "Recently Viewed"

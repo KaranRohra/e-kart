@@ -11,6 +11,7 @@ import { addProductToCartAPI } from "services/apis/cart";
 import { isUserAuthenticated } from "services/apis/accounts";
 import { addProductToWishlist, removeProductFromWishlist } from "services/actions/wishlist";
 import { addProductToWishlistAPI, removeProductFromWishlistAPI } from "services/apis/wishlist";
+import { addProductToRecentlyViewAPI } from "services/actions/recently-view";
 
 function SingleProductView() {
     const history = useHistory();
@@ -27,6 +28,7 @@ function SingleProductView() {
             setLoading(false);
         };
         callApi();
+        addProductToRecentlyViewAPI(id);
     }, [id]);
 
     const handleAddToCart = () => {
