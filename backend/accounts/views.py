@@ -23,6 +23,7 @@ class RegisterAPI(generics.CreateAPIView):
         user = models.User.objects.get(email=response.data["email"])
         models_to_create = (
             product_models.WishList(user=user),
+            product_models.RecentlyViewed(user=user),
             cart_models.Cart(user=user),
             cart_models.SaveForLater(user=user),
         )
