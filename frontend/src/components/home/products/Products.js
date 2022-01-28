@@ -47,7 +47,9 @@ function Products() {
                         </a>
                     </div>
 
-                    {isUserAuthenticated() && <ProductCarousel products={recentlyViewedProducts} />}
+                    {isUserAuthenticated() && recentlyViewedProducts.length > 0 && (
+                        <ProductCarousel products={recentlyViewedProducts} />
+                    )}
                 </>
             )}
         </div>
