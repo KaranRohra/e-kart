@@ -43,7 +43,6 @@ class UserAPI(views.APIView):
     def patch(self, request):
         current_password = request.data.get("current_password")
         new_password = request.data.get("new_password")
-
         new_email = request.data.get("new_email")
         if current_password and new_password:
             if request.user.check_password(current_password):
