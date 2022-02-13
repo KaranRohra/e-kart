@@ -12,6 +12,7 @@ import { isUserAuthenticated } from "services/apis/accounts";
 import { addProductToWishlist, removeProductFromWishlist } from "services/actions/wishlist";
 import { addProductToWishlistAPI, removeProductFromWishlistAPI } from "services/apis/wishlist";
 import { addProductToRecentlyViewAPI } from "services/actions/recently-view";
+import RatingsAndReviews from "components/products/single-product/RatingsAndReviews";
 
 function SingleProductView() {
     const history = useHistory();
@@ -134,6 +135,8 @@ function SingleProductView() {
                             <h3>Specification</h3>
                             <Specification specifications={product.specification_titles} />
                         </div>
+
+                        <RatingsAndReviews product={product} />
                     </Col>
                 </Row>
             )}

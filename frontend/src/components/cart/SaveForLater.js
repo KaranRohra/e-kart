@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function SaveForLater(props) {
@@ -18,17 +18,17 @@ function SaveForLater(props) {
                     >
                         Remove
                     </Button>
-                    <div style={{ display: "flex" }} className="pt-2 pe-2 ps-2">
+                    <Row className="pt-2 pe-2 ps-2">
                         {/* Product Image */}
-                        <div style={{ width: 112, height: 78.5 }}>
+                        <Col xs={2} style={{ width: 112, height: 78.5 }}>
                             <img
                                 style={{ width: "100%", height: "100%", objectFit: "contain" }}
                                 src={props.products[productID].images[0].image_url}
                                 alt=""
                             />
-                        </div>
+                        </Col>
                         {/* Product Details */}
-                        <div className="ms-3">
+                        <Col className="ms-3">
                             <Link style={{ textDecoration: "none" }} to={`/products/${productID}`}>
                                 <h6>{props.products[productID].long_title}</h6>{" "}
                             </Link>
@@ -49,8 +49,8 @@ function SaveForLater(props) {
                             >
                                 Move to Cart
                             </p>
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
                     <hr />
                 </React.Fragment>
             ))}
