@@ -13,3 +13,10 @@ export const getProduct = (params) => {
         url: `/products/${params.productId}/`,
     });
 };
+
+export const getProductSalesGraphAPI = (params) => {
+    return baseTemplate({
+        method: "get",
+        url: `/orders/product/${params.productId}/`,
+    });
+};
