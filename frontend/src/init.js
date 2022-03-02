@@ -1,22 +1,20 @@
-import { getUserAPI } from "services/apis/accounts";
+import { getUserAPI, isUserAuthenticated } from "services/apis/accounts";
 import { getProductsFromCartAPI } from "services/apis/cart";
 import { getProductsFromWishlistAPI } from "services/apis/wishlist";
 
 export const initializeState = async () => {
     const initialState = {};
-    const cartResponse = await getProductsFromCartAPI();
-    const userResponse = await getUserAPI();
-    const wishlistResponse = await getProductsFromWishlistAPI();
+    const IUA = isUserAuthenticated(); // IUA = isUserAutheticated
+    const cartResponse = IUA && (await getProductsFromCartAPI());
+    const userResponse = IUA && (await getUserAPI());
+    const wishlistResponse = IUA && (await getProductsFromWishlistAPI());
 
-    if (userResponse.data) {
+    if (IUA) {
         initialState.user = userResponse.data;
-    }
-    if (cartResponse.data) {
         initialState.cart = convertProductListToDictionary(cartResponse.data);
-    }
-    if (wishlistResponse.data) {
         initialState.wishlist = convertProductListToDictionary(wishlistResponse.data);
     }
+
     return initialState;
 };
 

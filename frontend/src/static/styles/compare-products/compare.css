@@ -1,0 +1,34 @@
+.text-custom-truncate {
+    display: -webkit-box !important;
+    max-width: 230px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.table-custom .thead-custom .tr-custom .th-custom {
+    background-color: white;
+    z-index: 10;
+}
+
+.body-custom {
+    margin: 0;
+    padding: 2rem;
+}
+
+.table-custom {
+    text-align: left;
+    position: relative;
+    border-collapse: collapse;
+}
+
+.th-custom {
+    background: white;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+}
+
+.table-responsive-custom {
+    overflow-x: inherit !important;
+}

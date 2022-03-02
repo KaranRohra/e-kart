@@ -15,8 +15,32 @@ from orders import models
 from orders import serializers
 from rest_framework import authentication
 from rest_framework import permissions
+from rest_framework import views
 from rest_framework import viewsets
 from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+
+
+class ProductSalesGraphAPI(views.APIView):
+    def get(self, request, *args, **kwargs):
+        orders = models.Order.objects.filter(product__id=kwargs["id"], status="Delivered")
+        month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+        x_axis, y_axis = [], []
+        curr_month = timezone.now().month - 1
+        for _ in range(12):
+            x_axis.append(month[curr_month])
+            y_axis.append(orders.filter(created_at__month=curr_month + 1).count())
+            curr_month = (curr_month - 1) % 12
+
+        x_axis = x_axis[::-1]
+        y_axis = y_axis[::-1]
+
+        data = {
+            "x_axis": x_axis,
+            "y_axis": y_axis,
+        }
+        return Response(data)
 
 
 class OrdersAPI(viewsets.ModelViewSet):

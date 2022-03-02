@@ -1,11 +1,10 @@
 import React from "react";
 import { Col } from "react-bootstrap";
 import { useHistory, Link } from "react-router-dom";
+import NotFoundIcon from "components/common/404/NotFoundIcon";
 
 function ProductView(props) {
     const history = useHistory();
-    const notFoundImage =
-        "https://rukminim1.flixcart.com/www/100/100/promos/23/08/2020/c5f14d2a-2431-4a36-b6cb-8b5b5e283d4f.png?q=90";
     const ordersToDisplay = props.orders.filter((order) => {
         return props.filterList.length === 0 || props.filterList.includes(order.status);
     });
@@ -13,16 +12,12 @@ function ProductView(props) {
     return (
         <>
             {ordersToDisplay.length === 0 && (
-                <div className="ms-3 text-center" style={{ width: "100%" }}>
-                    <div style={{ display: "inline-block", marginTop: 150 }}>
-                        <img src={notFoundImage} alt="Not Found" />
-                        <h3>Sorry, no result found</h3>
-                        <p className="text-secondary">Edit search or go back to My Orders Page</p>
-                        <a href="/orders" className="btn btn-primary">
-                            Go to My Orders
-                        </a>
-                    </div>
-                </div>
+                <NotFoundIcon
+                    btnText="Go to my orders"
+                    redirectUrl="/orders"
+                    title="Sorry, no result found"
+                    detailText="Edit search or go back to My Orders Page"
+                />
             )}
             <div className="ms-3">
                 {ordersToDisplay.map((order, orderKey) => (
