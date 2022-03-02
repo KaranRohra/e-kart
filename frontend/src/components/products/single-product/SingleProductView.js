@@ -13,6 +13,7 @@ import { addProductToWishlist, removeProductFromWishlist } from "services/action
 import { addProductToWishlistAPI, removeProductFromWishlistAPI } from "services/apis/wishlist";
 import { addProductToRecentlyViewAPI } from "services/actions/recently-view";
 import ProductSalesGraph from "components/products/sales-graph/ProductSalesGraph";
+import { ToastContainer, toast } from "react-toastify";
 
 function SingleProductView() {
     const history = useHistory();
@@ -20,6 +21,7 @@ function SingleProductView() {
     const [loading, setLoading] = React.useState(true);
     const [product, setProduct] = React.useState(null);
     const [addingProductToCart, setAddingProductToCart] = React.useState(false);
+    const [isProductInCompare, setIsProductInCompare] = React.useState(false);
     const { id } = useParams();
 
     React.useEffect(() => {
@@ -27,11 +29,23 @@ function SingleProductView() {
             const response = await getProduct({ productId: id });
             const graphData = await getProductSalesGraphAPI({ productId: id });
             response.data["graphData"] = graphData.data;
+
             setProduct(response.data);
+
+            const compare = Object.keys(JSON.parse(window.localStorage.getItem("compare") || "{}"));
+            for (let i = 0; i < compare.length; i++) {
+                // eslint-disable-next-line
+                if (compare[i] == id) {
+                    setIsProductInCompare(true);
+                    break;
+                }
+            }
             setLoading(false);
         };
         callApi();
         addProductToRecentlyViewAPI(id);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     const handleAddToCart = () => {
@@ -57,12 +71,37 @@ function SingleProductView() {
         );
     };
 
+    const handleCompare = () => {
+        let compare = JSON.parse(window.localStorage.getItem("compare") || "{}");
+        if (isProductInCompare) {
+            delete compare[product.id];
+        } else {
+            const productIds = Object.keys(compare);
+            // eslint-disable-next-line
+            if (productIds.length == 3) {
+                toast.error("You can only compare 3 products at a time");
+                return;
+            }
+            for (let i = 0; i < productIds.length; i++) {
+                // eslint-disable-next-line
+                if (compare[productIds[i]].category !== product.category) {
+                    toast.warn("You can only compare products from same category");
+                    return;
+                }
+            }
+            compare[product.id] = product;
+        }
+        window.localStorage.setItem("compare", JSON.stringify(compare));
+        setIsProductInCompare(!isProductInCompare);
+    };
+
     return (
         <Container style={{ background: "white" }}>
             {loading ? (
                 <BoxSpinner message="Getting product for you please wait 🤗" />
             ) : (
                 <>
+                    <ToastContainer />
                     <Row>
                         <Col md={5} xs={12} className="m-3">
                             <Carousel style={{ width: "550px" }} variant="dark">
@@ -83,20 +122,36 @@ function SingleProductView() {
                                     </Button>
                                 </div>
                             ) : (
-                                <Button
-                                    onClick={async () => {
-                                        if (!isUserAuthenticated()) history.push("/login");
-                                        setAddingProductToCart(true);
-                                        handleAddToCart();
-                                        await addProductToCartAPI({ id: product.id });
-                                        setAddingProductToCart(false);
-                                    }}
-                                    variant="warning"
-                                    className="m-3"
-                                    style={{ width: "100%", fontSize: "18px" }}
-                                >
-                                    Add to Cart <Icons.CartFill style={{ color: "blue" }} />
-                                </Button>
+                                <div className="text-center mt-2">
+                                    <Button
+                                        onClick={async () => {
+                                            if (!isUserAuthenticated()) history.push("/login");
+                                            setAddingProductToCart(true);
+                                            handleAddToCart();
+                                            await addProductToCartAPI({ id: product.id });
+                                            setAddingProductToCart(false);
+                                        }}
+                                        className="m-3"
+                                        variant="danger"
+                                        style={{ width: "45%", fontSize: "18px" }}
+                                    >
+                                        Add to Cart <Icons.CartFill />
+                                    </Button>
+
+                                    {isProductInCompare ? (
+                                        <Button onClick={handleCompare} style={{ width: "45%", fontSize: "18px" }}>
+                                            Compare <Icons.ClipboardData />
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            onClick={handleCompare}
+                                            variant="light border border-dark"
+                                            style={{ width: "45%", fontSize: "18px" }}
+                                        >
+                                            Compare <Icons.ClipboardData />
+                                        </Button>
+                                    )}
+                                </div>
                             )}
                         </Col>
                         <Col className="m-3">

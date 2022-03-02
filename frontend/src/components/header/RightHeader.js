@@ -14,13 +14,14 @@ function RightHeader() {
             history.push("/login");
         }
     };
-
     return (
         <Nav>
-            {isUserAuthenticated() && (
+            {isUserAuthenticated() ? (
                 <Nav.Link onClick={handleCart}>
                     Cart <Badge bg="secondary">{Object.keys(context.state.cart).length}</Badge>
                 </Nav.Link>
+            ) : (
+                <Nav.Link onClick={() => history.push("/products/compare")}>Compare</Nav.Link>
             )}
             <Nav.Item className="ms-3" style={{ display: "flex" }}>
                 <FormControl type="text" name="search" placeholder="Search" />

@@ -18,7 +18,7 @@ function ProductSalesGraph(props) {
                 graphData.max = Math.max(graphData.max, val);
                 graphData.min = Math.min(graphData.min, val);
             });
-            graphData.text = item.short_title + " VS ";
+            graphData.text += item.short_title + " VS ";
         });
         graphData.text = graphData.text.slice(0, -3);
         return graphData;
@@ -42,7 +42,7 @@ function ProductSalesGraph(props) {
                     show: false,
                 },
             },
-            colors: ["#CC6699", "#00a6ff", "#21e60b"],
+            colors: ["#ffc107", "#0d6efd", "#dc3545"].sort(() => 0.5 - Math.random()),
             dataLabels: {
                 enabled: true,
             },

@@ -16,6 +16,7 @@ function LeftHeader() {
     const handleSignOut = () => {
         cookies.remove("token");
         dispatch({ type: EMPTY_STATE });
+        window.localStorage.clear();
     };
 
     return (
@@ -26,6 +27,7 @@ function LeftHeader() {
                     <NavDropdown.Item onClick={() => history.push("/profile")}>Profile</NavDropdown.Item>
                     <NavDropdown.Item onClick={() => history.push("/orders")}>Orders</NavDropdown.Item>
                     <NavDropdown.Item onClick={() => history.push("/wishlist")}>Wishlist</NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => history.push("/products/compare")}>Compare</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={handleSignOut}>Sign out</NavDropdown.Item>
                 </NavDropdown>

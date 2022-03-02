@@ -83,3 +83,34 @@ def put_product(model, product_id, message):
     model.products.add(product_id)
 
     return {"status": status.HTTP_200_OK, "data": {"message": "Product added to " + message}}
+
+
+class CompareProductAPI(views.APIView):
+    def get(self, request, *args, **kwargs):
+        products_ids = [int(val) for val in (request.GET.get("products_ids") or "").split(".")]
+        products = models.Product.objects.filter(id__in=products_ids)
+        serializer = serializers.ProductSerializer(products, many=True)
+        result = {}
+        data = serializer.data
+        count_titles = {}
+        for product in data:
+            specification_title = product["specification_titles"]
+            for specification in specification_title:
+                count_titles[specification.get("title")] = count_titles.get(specification.get("title"), 0) + 1
+
+        for index in range(len(data)):
+            specification_title = data[index]["specification_titles"]
+            for specification in specification_title:
+                title = specification.get("title")
+                if count_titles[title] == len(data):
+                    result[title] = result.get(title) or {}
+                    specifications = specification.get("specifications")
+                    for val in specifications:
+                        name = val.get("name")
+                        value = val.get("value")
+                        c = result[title].get(name)
+                        if c is None:
+                            c = ["-"] * len(data)
+                        c[index] = value
+                        result[title][name] = c
+        return Response(result)

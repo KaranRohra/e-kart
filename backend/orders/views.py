@@ -23,7 +23,7 @@ from rest_framework.response import Response
 
 class ProductSalesGraphAPI(views.APIView):
     def get(self, request, *args, **kwargs):
-        orders = models.Order.objects.filter(product__id=kwargs["id"])
+        orders = models.Order.objects.filter(product__id=kwargs["id"], status="Delivered")
         month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
         x_axis, y_axis = [], []

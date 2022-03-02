@@ -20,3 +20,10 @@ export const getProductSalesGraphAPI = (params) => {
         url: `/orders/product/${params.productId}/`,
     });
 };
+
+export const getCompareProductsAPI = (params) => {
+    return baseTemplate({
+        method: "get",
+        url: `/products/compare/?products_ids=${params.ids}`,
+    });
+};
