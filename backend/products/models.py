@@ -63,13 +63,12 @@ class Specification(models.Model):
 
 
 class RatingAndReview(models.Model):
-    related_name, related_query_name = "ratings_and_reviews", "rating_and_review"
-    likes = models.PositiveIntegerField()
-    dislikes = models.PositiveIntegerField()
+    related_name, related_query_name = "ratings_and_reviews", "ratings_and_reviews"
+    likes = models.PositiveIntegerField(default=0)
+    dislikes = models.PositiveIntegerField(default=0)
     stars = models.PositiveIntegerField()
     description = models.TextField()
     title = models.CharField(max_length=100)
-    name = models.CharField(max_length=100)
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name=related_name, related_query_name=related_query_name
     )
@@ -81,6 +80,20 @@ class RatingAndReview(models.Model):
 
     def __str__(self):
         return f"{self.id} __ {self.title}"
+
+
+class UserRatingsAndReviewsLikes(models.Model):
+    related_name, related_query_name = "ratings_and_reviews_likes", "ratings_and_reviews_likes"
+    user = models.ForeignKey(
+        accounts_models.User, on_delete=models.CASCADE, related_name=related_name, related_query_name=related_query_name
+    )
+    ratings_and_reviews = models.ForeignKey(
+        RatingAndReview, on_delete=models.CASCADE, related_name=related_name, related_query_name=related_query_name
+    )
+    like = models.BooleanField(default=False)
+    dislike = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class WishList(models.Model):

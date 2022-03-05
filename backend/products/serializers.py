@@ -9,6 +9,12 @@ class RatingAndReviewsSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class UserRatingAndReviewsLikesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.UserRatingsAndReviewsLikes
+        fields = "__all__"
+
+
 class SpecificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Specification
