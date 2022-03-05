@@ -2,7 +2,6 @@ import React from "react";
 import * as Icons from "react-bootstrap-icons";
 import { Badge, Button } from "react-bootstrap";
 
-// TODO Connect to Database
 function RatingsAndReviews() {
     const lst = [1, 1, 1];
     return (
@@ -17,8 +16,8 @@ function RatingsAndReviews() {
                 <span className="ms-2 text-secondary">1234 Ratings & 123 Reviews</span>
             </div>
             <div className="mt-3">
-                {lst.map(() => (
-                    <>
+                {lst.map((_, key) => (
+                    <React.Fragment key={key}>
                         <div>
                             <div style={{ fontWeight: "bold" }}>
                                 <Badge className="me-3">
@@ -42,7 +41,7 @@ function RatingsAndReviews() {
                             </div>
                         </div>
                         <hr />
-                    </>
+                    </React.Fragment>
                 ))}
             </div>
             <div>

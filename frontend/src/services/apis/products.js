@@ -13,3 +13,17 @@ export const getProduct = (params) => {
         url: `/products/${params.productId}/`,
     });
 };
+
+export const getProductSalesGraphAPI = (params) => {
+    return baseTemplate({
+        method: "get",
+        url: `/orders/product/${params.productId}/`,
+    });
+};
+
+export const getCompareProductsAPI = (params) => {
+    return baseTemplate({
+        method: "get",
+        url: `/products/compare/?products_ids=${params.ids}`,
+    });
+};

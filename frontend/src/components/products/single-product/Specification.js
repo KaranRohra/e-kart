@@ -31,6 +31,7 @@ function Specification(props) {
                     className="mt-2"
                     style={{ width: "100%" }}
                     onClick={() => setReadMore({ visibility: "visible", height: "auto" })}
+                    variant="warning"
                 >
                     <span>Read More</span>
                 </Button>
