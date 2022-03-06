@@ -1,6 +1,7 @@
 import React from "react";
 import * as Icons from "react-bootstrap-icons";
-import { Badge, Button } from "react-bootstrap";
+import { Badge } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function RatingsAndReviews() {
     const lst = [1, 1, 1];
@@ -45,7 +46,10 @@ function RatingsAndReviews() {
                 ))}
             </div>
             <div>
-                <Button> All Reviews </Button>
+                <Link className="btn btn-primary" to="/products/ratings-and-reviews">
+                    {" "}
+                    All Reviews{" "}
+                </Link>
             </div>
         </div>
     );
