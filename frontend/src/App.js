@@ -29,6 +29,7 @@ import Wishlist from "components/wishlist/Wishlist";
 import ReviewOrder from "components/orders/ReviewOrder";
 import OrderDetails from "components/orders/OrderDetails";
 import CompareProducts from "components/products/compare-products/CompareProducts";
+import Reviews from "components/products/reviews/Reviews";
 
 export const Context = React.createContext();
 
@@ -71,9 +72,14 @@ function App() {
                                 <Home />
                                 <Footer />
                             </Route>
-                            <Route exact path="/products/compare/">
+                            <Route exact path="/products/compare">
                                 <Header />
                                 <CompareProducts />
+                                <Footer />
+                            </Route>
+                            <Route exact path="/products/:id/ratings-and-reviews">
+                                <Header />
+                                <Reviews />
                                 <Footer />
                             </Route>
                             <Route exact path="/products/:id">

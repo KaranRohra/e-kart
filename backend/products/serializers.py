@@ -3,9 +3,9 @@ from products import models
 from rest_framework import serializers
 
 
-class RatingAndReviewsSerializer(serializers.ModelSerializer):
+class RatingsAndReviewsLikeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.RatingAndReview
+        model = models.RatingsAndReviewsLike
         fields = "__all__"
 
 
@@ -36,4 +36,10 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Product
+        fields = "__all__"
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RatingAndReview
         fields = "__all__"

@@ -1,0 +1,126 @@
+.my-review-body {
+    background-image: linear-gradient(#4a148c, #e53935);
+    background-repeat: no-repeat;
+    color: #000;
+    overflow-x: hidden;
+}
+
+.my-review-card {
+    border-radius: 5px;
+    background-color: #fff;
+    padding-left: 60px;
+    padding-right: 60px;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.my-review-rating-box {
+    width: 130px;
+    height: 130px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: #fbc02d;
+    color: #fff;
+}
+
+.my-review-rating-label {
+    font-weight: bold;
+}
+
+.my-review-rating-bar {
+    width: 300px;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.my-review-bar-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.my-review-bar-5 {
+    width: 70%;
+    height: 13px;
+    background-color: #fbc02d;
+    border-radius: 20px;
+}
+
+.my-review-bar-4 {
+    width: 30%;
+    height: 13px;
+    background-color: #fbc02d;
+    border-radius: 20px;
+}
+
+.my-review-bar-3 {
+    width: 20%;
+    height: 13px;
+    background-color: #fbc02d;
+    border-radius: 20px;
+}
+
+.my-review-bar-2 {
+    width: 10%;
+    height: 13px;
+    background-color: #fbc02d;
+    border-radius: 20px;
+}
+
+.my-review-bar-1 {
+    width: 0%;
+    height: 13px;
+    background-color: #fbc02d;
+    border-radius: 20px;
+}
+
+.my-review-td {
+    padding-bottom: 10px;
+}
+
+.my-review-star-active {
+    color: #fbc02d;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.my-review-star-active:hover {
+    color: #f9a825;
+    cursor: pointer;
+}
+
+.my-review-star-inactive {
+    color: #cfd8dc;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.my-review-blue-text {
+    color: #0091ea;
+}
+
+.my-review-content {
+    font-size: 18px;
+}
+
+.my-review-profile-pic {
+    width: 90px;
+    height: 90px;
+    border-radius: 100%;
+    margin-right: 30px;
+}
+
+.my-review-pic {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+}
+
+.my-review-vote {
+    cursor: pointer;
+}

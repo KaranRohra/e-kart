@@ -5,6 +5,8 @@ import Footer from "components/common/footer/Footer";
 import Header from "components/header/Header";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import { getOrderByIdAPI, updateOrderAPI } from "services/apis/orders";
+import ReviewForm from "components/products/reviews/ReviewForm";
+import { ToastContainer } from "react-toastify";
 
 function OrderDetails() {
     const history = useHistory();
@@ -42,6 +44,7 @@ function OrderDetails() {
                 <BoxSpinner message="Fetching order details" />
             ) : (
                 <div className="m-3 p-5">
+                    <ToastContainer />
                     <Container className="p-3 bg-light">
                         <Row>
                             <Col xs={8}>
@@ -139,6 +142,7 @@ function OrderDetails() {
                             </Col>
                         </Row>
                     </Container>
+                    {order.status === "Delivered" && <ReviewForm product={order.product} />}
                 </div>
             )}
             <Footer />

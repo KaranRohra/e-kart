@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 
 function ProductView(props) {
     return (
@@ -18,18 +18,18 @@ function ProductView(props) {
                                     Remove
                                 </Button>
                             )}
-                            <div style={{ display: "flex" }} className="pt-2 pe-2 ps-2">
+                            <Row className="pt-2 pe-2 ps-2">
                                 {/* Product Image */}
-                                <div style={{ width: 112, height: 78.5 }}>
+                                <Col xs={2} style={{ width: 112, height: 78.5 }}>
                                     <img
                                         style={{ width: "100%", height: "100%", objectFit: "contain" }}
                                         src={props.products[productID].images[0].image_url}
                                         alt=""
                                     />
                                     {/* <Selector product={props.products[productID]} /> */}
-                                </div>
+                                </Col>
                                 {/* Product Details */}
-                                <div className="ms-3">
+                                <Col className="ms-3">
                                     <Link style={{ textDecoration: "none" }} to={`/products/${productID}`}>
                                         <h6>{props.products[productID].long_title}</h6>{" "}
                                     </Link>
@@ -54,8 +54,8 @@ function ProductView(props) {
                                             Save for later
                                         </p>
                                     )}
-                                </div>
-                            </div>
+                                </Col>
+                            </Row>
                             <hr />
                         </React.Fragment>
                     ))}
