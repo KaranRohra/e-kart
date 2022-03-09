@@ -77,7 +77,7 @@ function App() {
                                 <CompareProducts />
                                 <Footer />
                             </Route>
-                            <Route exact path="/products/ratings-and-reviews">
+                            <Route exact path="/products/:id/ratings-and-reviews">
                                 <Header />
                                 <Reviews />
                                 <Footer />

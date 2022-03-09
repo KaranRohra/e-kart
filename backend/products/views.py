@@ -1,3 +1,5 @@
+from accounts import models as accounts_models
+from accounts import serializers as accounts_serializers
 from products import models
 from products import serializers
 from rest_framework import authentication
@@ -114,3 +116,110 @@ class CompareProductAPI(views.APIView):
                         c[index] = value
                         result[title][name] = c
         return Response(result)
+
+
+class RatingsAndReviewsLikeAPI(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (authentication.TokenAuthentication,)
+
+    def post(self, request, *args, **kwargs):
+        ratings_and_reviews = models.RatingAndReview.objects.get(id=kwargs["rar_id"])
+        obj, _ = models.RatingsAndReviewsLike.objects.update_or_create(
+            user=request.user,
+            ratings_and_reviews=ratings_and_reviews,
+        )
+
+        if request.data.get("liked") == "True":
+            obj.like = not obj.like
+            if obj.dislike and obj.like:
+                obj.dislike = False
+        elif request.data.get("disliked") == "True":
+            obj.dislike = not obj.dislike
+            if obj.dislike and obj.like:
+                obj.like = False
+        obj.save()
+        return Response(status=status.HTTP_200_OK, data=serializers.RatingsAndReviewsLikeSerializer(obj).data)
+
+
+class RatingAndReviewsAPI(views.APIView):
+    def get(self, request, *args, **kwargs):
+        product_id = kwargs["product_id"]
+        user_id = request.GET.get("user_id")
+        page_no = int(request.GET.get("page_no") or "1")
+
+        try:
+            product = models.Product.objects.get(id=product_id)
+        except Exception:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data={"message": "Product not found"})
+        total_number_of_ratings = product.ratings_and_reviews.count()
+        reviews = serializers.ReviewSerializer(
+            product.ratings_and_reviews.filter(description__isnull=False), many=True
+        ).data
+        for ratings_and_reviews in reviews:
+            ratings_and_reviews["user"] = accounts_serializers.UserSerializer(
+                accounts_models.User.objects.get(id=ratings_and_reviews["user"])
+            ).data
+            ratings_and_reviews["total_likes"] = models.RatingsAndReviewsLike.objects.filter(
+                ratings_and_reviews=ratings_and_reviews["id"], like=True
+            ).count()
+            ratings_and_reviews["total_dislikes"] = models.RatingsAndReviewsLike.objects.filter(
+                ratings_and_reviews=ratings_and_reviews["id"], dislike=True
+            ).count()
+
+        rating_and_review_filter = models.RatingAndReview.objects.filter
+        stars = {
+            1: rating_and_review_filter(stars=1, product=product).count(),
+            2: rating_and_review_filter(stars=2, product=product).count(),
+            3: rating_and_review_filter(stars=3, product=product).count(),
+            4: rating_and_review_filter(stars=4, product=product).count(),
+            5: rating_and_review_filter(stars=5, product=product).count(),
+        }
+        number_of_ratings = total_number_of_ratings
+        number_of_reviews = rating_and_review_filter(description__isnull=False, product=product).count()
+        sum_ = 0
+        for key, value in stars.items():
+            sum_ += key * value
+        average_stars = not total_number_of_ratings or round(sum_ / number_of_ratings, 1)
+        result = {
+            "number_of_ratings": number_of_ratings,
+            "number_of_reviews": number_of_reviews,
+            "average_stars": average_stars,
+            "stars": stars,
+            "reviews": paginator(reviews, page_no, 5),
+            "is_liked_by_user": models.RatingsAndReviewsLike.objects.filter(
+                user=user_id, like=True, ratings_and_reviews__product=product
+            ).values_list("ratings_and_reviews__id", flat=True),
+            "is_disliked_by_user": models.RatingsAndReviewsLike.objects.filter(
+                user=user_id, dislike=True, ratings_and_reviews__product=product
+            ).values_list("ratings_and_reviews__id", flat=True),
+        }
+        return Response(result)
+
+
+def paginator(lst, page_no, limit):
+    end_limit = page_no * limit
+    start_limit = end_limit - limit
+    return lst[start_limit:end_limit]
+
+
+class CreateReviewAPI(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (authentication.TokenAuthentication,)
+    serializer_class = serializers.ReviewSerializer
+    queryset = models.RatingAndReview.objects.all()
+
+
+class UpdateReviewAPI(generics.UpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (authentication.TokenAuthentication,)
+    serializer_class = serializers.ReviewSerializer
+    queryset = models.RatingAndReview.objects.all()
+
+
+class GetReviewAPI(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (authentication.TokenAuthentication,)
+
+    def get(self, request, *args, **kwargs):
+        review = models.RatingAndReview.objects.filter(product__id=kwargs["product_id"], user=request.user).first()
+        return Response(data=serializers.ReviewSerializer(review).data if review else {"message": "No review found"})

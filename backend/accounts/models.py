@@ -9,6 +9,9 @@ class User(auth_models.AbstractUser):
     username = None
     REQUIRED_FIELDS = []
 
+    def __str__(self) -> str:
+        return f"{self.id} __ {self.email}"
+
 
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

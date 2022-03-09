@@ -11,18 +11,17 @@ function LeftHeader() {
     const history = useHistory();
     const cookies = new Cookies();
 
-    const userIsEmpty = isUserAuthenticated();
-
     const handleSignOut = () => {
         cookies.remove("token");
         dispatch({ type: EMPTY_STATE });
         window.localStorage.clear();
+        window.location.href = "/login";
     };
 
     return (
         <Nav className="me-auto">
             <Nav.Link onClick={() => history.push("/")}>Home</Nav.Link>
-            {userIsEmpty ? (
+            {isUserAuthenticated() ? (
                 <NavDropdown title={state.user.first_name}>
                     <NavDropdown.Item onClick={() => history.push("/profile")}>Profile</NavDropdown.Item>
                     <NavDropdown.Item onClick={() => history.push("/orders")}>Orders</NavDropdown.Item>

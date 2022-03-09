@@ -1,83 +1,76 @@
 import React from "react";
 import * as Icons from "react-bootstrap-icons";
+import { handleLike, handleDislike } from "services/actions/products";
+function LowerReview(props) {
+    var options = { year: "numeric", month: "short", day: "numeric" };
 
-function LowerReview() {
     return (
         <div>
-            <div className="my-review-card">
-                <div className="d-flex">
-                    <div className="col">
-                        <h3 className="mt-2 mb-0 text-start">Vikram jit Singh</h3>
+            {props.reviews.map((review, key) => (
+                <div className="my-review-card" key={key}>
+                    <div className="d-flex">
+                        <div className="col">
+                            <h3 className="mt-2 mb-0 text-start">
+                                {review.user.first_name} {review.user.last_name}
+                            </h3>
+                            <div>
+                                <p className="text-start">
+                                    <span className="text-muted m-1">{review.stars}</span>
+                                    {[...Array(review.stars).keys()].map((_, key) => (
+                                        <React.Fragment key={key}>
+                                            <Icons.StarFill className="m-1 my-review-star-active" />
+                                        </React.Fragment>
+                                    ))}
+                                    {[...Array(5 - review.stars).keys()].map((_, key) => (
+                                        <React.Fragment key={key}>
+                                            <Icons.Star className="m-1 my-review-star-active" />
+                                        </React.Fragment>
+                                    ))}
+                                </p>
+                            </div>
+                        </div>
                         <div>
-                            <p className="text-start">
-                                <span className="text-muted m-1">4.0</span>
-                                <Icons.StarFill className="m-1 my-review-star-active" />
-                                <Icons.StarFill className="m-1 my-review-star-active" />
-                                <Icons.StarFill className="m-1 my-review-star-active" />
-                                <Icons.StarHalf className="m-1 my-review-star-active" />
-                                <Icons.Star className="m-1 my-review-star-active" />
+                            <p className="text-muted pt-5 pt-sm-3">
+                                {new Date(review.created_at).toLocaleDateString("en-us", options)}
                             </p>
                         </div>
                     </div>
-                    <div>
-                        <p className="text-muted pt-5 pt-sm-3">10 Sept</p>
-                    </div>
-                </div>
-                <div className="row text-start">
-                    <h4 className="my-review-blue-text mt-3">"An awesome activity to experience"</h4>
-                    <p className="my-review-content">
-                        If you really enjoy spending your vacation 'on water' or would like to try something new and
-                        exciting for the first time.
-                    </p>
-                </div>
-                <div className="d-flex text-start mt-4">
-                    <div className="my-review-like m-1 my-review-vote">
-                        <img src="https://i.imgur.com/mHSQOaX.png" alt="im" />
-                        <span className="my-review-blue-text pl-2">20</span>
-                    </div>
-                    <div className="my-review-unlike my-review-vote m-1">
-                        <img src="https://i.imgur.com/bFBO3J7.png" alt="im" />
-                        <span className="text-muted pl-2">4</span>
-                    </div>
-                </div>
-            </div>
-            <div className="my-review-card">
-                <div className="d-flex">
-                    <div className="col">
-                        <h3 className="mt-2 mb-0 text-start">Vikram jit Singh</h3>
-                        <div>
-                            <p className="text-start">
-                                <span className="text-muted m-1">4.0</span>
-                                <Icons.StarFill className="m-1 my-review-star-active" />
-                                <Icons.StarFill className="m-1 my-review-star-active" />
-                                <Icons.StarFill className="m-1 my-review-star-active" />
-                                <Icons.StarHalf className="m-1 my-review-star-active" />
-                                <Icons.Star className="m-1 my-review-star-active" />
-                            </p>
-                        </div>
+                    <div className="row text-start">
+                        <h4 className="my-review-blue-text mt-3">"{review.title}"</h4>
+                        <p className="my-review-content">{review.description}</p>
                     </div>
                     <div>
-                        <p className="text-muted pt-5 pt-sm-3">10 Sept</p>
+                        <span className="m-2">
+                            {props.ratingsAndReviews.is_liked_by_user.includes(review.id) ? (
+                                <Icons.HandThumbsUpFill
+                                    onClick={() => handleLike(review.id)}
+                                    style={{ cursor: "pointer" }}
+                                />
+                            ) : (
+                                <Icons.HandThumbsUp
+                                    onClick={() => handleLike(review.id)}
+                                    style={{ cursor: "pointer" }}
+                                />
+                            )}
+                            {review.total_likes}
+                        </span>
+                        <span className="m-2">
+                            {props.ratingsAndReviews.is_disliked_by_user.includes(review.id) ? (
+                                <Icons.HandThumbsDownFill
+                                    onClick={() => handleDislike(review.id)}
+                                    style={{ cursor: "pointer" }}
+                                />
+                            ) : (
+                                <Icons.HandThumbsDown
+                                    onClick={() => handleDislike(review.id)}
+                                    style={{ cursor: "pointer" }}
+                                />
+                            )}
+                            {review.total_dislikes}
+                        </span>
                     </div>
                 </div>
-                <div className="row text-start">
-                    <h4 className="my-review-blue-text mt-3">"An awesome activity to experience"</h4>
-                    <p className="my-review-content">
-                        If you really enjoy spending your vacation 'on water' or would like to try something new and
-                        exciting for the first time.
-                    </p>
-                </div>
-                <div className="d-flex text-start mt-4">
-                    <div className="my-review-like m-1 my-review-vote">
-                        <img src="https://i.imgur.com/mHSQOaX.png" alt="im" />
-                        <span className="my-review-blue-text pl-2">20</span>
-                    </div>
-                    <div className="my-review-unlike my-review-vote m-1">
-                        <img src="https://i.imgur.com/bFBO3J7.png" alt="im" />
-                        <span className="text-muted pl-2">4</span>
-                    </div>
-                </div>
-            </div>
+            ))}
         </div>
     );
 }

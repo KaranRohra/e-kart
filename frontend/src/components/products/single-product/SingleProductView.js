@@ -2,7 +2,7 @@ import React from "react";
 import { Carousel, Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import { useParams, useHistory } from "react-router";
 import * as Icons from "react-bootstrap-icons";
-import { getProduct, getProductSalesGraphAPI } from "services/apis/products";
+import { getProduct, getProductSalesGraphAPI, getProductRatingsAndReviewsAPI } from "services/apis/products";
 import BoxSpinner from "components/common/spinners/BoxSpinner";
 import Specification from "components/products/single-product/Specification";
 import { Context } from "App";
@@ -23,15 +23,19 @@ function SingleProductView() {
     const [product, setProduct] = React.useState(null);
     const [addingProductToCart, setAddingProductToCart] = React.useState(false);
     const [isProductInCompare, setIsProductInCompare] = React.useState(false);
+    const [ratingsAndReviews, setRatingsAndReviews] = React.useState({});
     const { id } = useParams();
 
     React.useEffect(() => {
         const callApi = async () => {
             const response = await getProduct({ productId: id });
             const graphData = await getProductSalesGraphAPI({ productId: id });
+            const ratingsAndReviewsData = await getProductRatingsAndReviewsAPI({
+                productId: id,
+                userId: (context.state.user && context.state.user.id) || 0,
+                pageNo: 1,
+            });
             response.data["graphData"] = graphData.data;
-
-            setProduct(response.data);
 
             const compare = Object.keys(JSON.parse(window.localStorage.getItem("compare") || "{}"));
             for (let i = 0; i < compare.length; i++) {
@@ -41,6 +45,8 @@ function SingleProductView() {
                     break;
                 }
             }
+            setRatingsAndReviews(ratingsAndReviewsData.data);
+            setProduct(response.data);
             setLoading(false);
         };
         callApi();
@@ -105,55 +111,57 @@ function SingleProductView() {
                     <ToastContainer />
                     <Row>
                         <Col md={5} xs={12} className="m-3">
-                            <Carousel style={{ width: "550px" }} variant="dark">
-                                {product.images.map((image, index) => (
-                                    <Carousel.Item key={index} style={{ width: 500, height: 500 }}>
-                                        <img
-                                            style={{ width: "100%", height: "100%", objectFit: "contain" }}
-                                            src={image.image_url}
-                                            alt="ProductImage"
-                                        />
-                                    </Carousel.Item>
-                                ))}
-                            </Carousel>
-                            {addingProductToCart ? (
-                                <div className="text-center mt-2">
-                                    <Button disabled>
-                                        <Spinner animation="border" variant="warning" />
-                                    </Button>
-                                </div>
-                            ) : (
-                                <div className="text-center mt-2">
-                                    <Button
-                                        onClick={async () => {
-                                            if (!isUserAuthenticated()) history.push("/login");
-                                            setAddingProductToCart(true);
-                                            handleAddToCart();
-                                            await addProductToCartAPI({ id: product.id });
-                                            setAddingProductToCart(false);
-                                        }}
-                                        className="m-3"
-                                        variant="danger"
-                                        style={{ width: "45%", fontSize: "18px" }}
-                                    >
-                                        Add to Cart <Icons.CartFill />
-                                    </Button>
-
-                                    {isProductInCompare ? (
-                                        <Button onClick={handleCompare} style={{ width: "45%", fontSize: "18px" }}>
-                                            Compare <Icons.ClipboardData />
+                            <div style={{ position: "sticky", top: "5%" }}>
+                                <Carousel style={{ width: "550px" }} variant="dark">
+                                    {product.images.map((image, index) => (
+                                        <Carousel.Item key={index} style={{ width: 500, height: 500 }}>
+                                            <img
+                                                style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                                                src={image.image_url}
+                                                alt="ProductImage"
+                                            />
+                                        </Carousel.Item>
+                                    ))}
+                                </Carousel>
+                                {addingProductToCart ? (
+                                    <div className="text-center mt-2">
+                                        <Button disabled>
+                                            <Spinner animation="border" variant="warning" />
                                         </Button>
-                                    ) : (
+                                    </div>
+                                ) : (
+                                    <div className="text-center mt-2">
                                         <Button
-                                            onClick={handleCompare}
-                                            variant="light border border-dark"
+                                            onClick={async () => {
+                                                if (!isUserAuthenticated()) history.push("/login");
+                                                setAddingProductToCart(true);
+                                                handleAddToCart();
+                                                await addProductToCartAPI({ id: product.id });
+                                                setAddingProductToCart(false);
+                                            }}
+                                            className="m-3"
+                                            variant="danger"
                                             style={{ width: "45%", fontSize: "18px" }}
                                         >
-                                            Compare <Icons.ClipboardData />
+                                            Add to Cart <Icons.CartFill />
                                         </Button>
-                                    )}
-                                </div>
-                            )}
+
+                                        {isProductInCompare ? (
+                                            <Button onClick={handleCompare} style={{ width: "45%", fontSize: "18px" }}>
+                                                Compare <Icons.ClipboardData />
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={handleCompare}
+                                                variant="light border border-dark"
+                                                style={{ width: "45%", fontSize: "18px" }}
+                                            >
+                                                Compare <Icons.ClipboardData />
+                                            </Button>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                         </Col>
                         <Col className="m-3">
                             <Row style={{ display: "flex", justifyContent: "space-between" }}>
@@ -196,7 +204,7 @@ function SingleProductView() {
                                 <h3>Specification</h3>
                                 <Specification specifications={product.specification_titles} />
                             </div>
-                            <RatingsAndReviews product={product} />
+                            <RatingsAndReviews ratingsAndReviews={ratingsAndReviews} productId={product.id} />
                         </Col>
                     </Row>
 

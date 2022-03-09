@@ -7,6 +7,11 @@ class ProductImageInline(admin.TabularInline):
     model = models.ProductImage
 
 
+@admin.register(models.RatingsAndReviewsLike)
+class RatingAndReviewLikesAdmin(admin.ModelAdmin):
+    list_display = ("id", "user")
+
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = (
@@ -34,6 +39,6 @@ admin.site.register(models.RecentlyViewed)
 
 @admin.register(models.RatingAndReview)
 class RatingAndReviewAdmin(admin.ModelAdmin):
-    list_display = ("title", "user", "product")
+    list_display = ("id", "title", "user", "product")
     search_fields = ("title", "user", "product")
     list_filter = ("product",)

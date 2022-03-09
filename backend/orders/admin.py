@@ -6,5 +6,5 @@ from orders import models
 class OrderAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "status")
     list_filter = ("status", "created_at", "updated_at")
-    search_fields = ("user__username", "user__email")
+    search_fields = ("user__email",)
     # readonly_fields = ("user", "status")
