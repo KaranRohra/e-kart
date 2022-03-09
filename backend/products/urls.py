@@ -1,10 +1,8 @@
 from django.urls import path
 from products import views
-from rest_framework import routers
 
-route = routers.DefaultRouter()
-route.register("", views.ProductAPI, basename="products")
 urlpatterns = [
+    path("", views.ProductAPI.as_view(), name="product-list"),
     path("wishlist/", views.WishlistAPI.as_view(), name="wishlist"),
     path("recently-viewed/", views.RecentlyViewedAPI.as_view(), name="recently-view"),
     path("compare/", views.CompareProductAPI.as_view(), name="compare"),
@@ -13,4 +11,4 @@ urlpatterns = [
     path("create-review/", views.CreateReviewAPI.as_view(), name="create-review"),
     path("review/<int:pk>/", views.UpdateReviewAPI.as_view(), name="create-review"),
     path("<int:product_id>/review/", views.GetReviewAPI.as_view(), name="create-review"),
-] + route.urls
+]
