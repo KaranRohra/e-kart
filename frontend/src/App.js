@@ -30,6 +30,7 @@ import ReviewOrder from "components/orders/ReviewOrder";
 import OrderDetails from "components/orders/OrderDetails";
 import CompareProducts from "components/products/compare-products/CompareProducts";
 import Reviews from "components/products/reviews/Reviews";
+import ProductSearch from "components/search/ProductSearch";
 
 export const Context = React.createContext();
 
@@ -85,6 +86,11 @@ function App() {
                             <Route exact path="/products/:id">
                                 <Header />
                                 <SingleProductView />
+                                <Footer />
+                            </Route>
+                            <Route exact path="/search/:value">
+                                <Header />
+                                <ProductSearch />
                                 <Footer />
                             </Route>
 

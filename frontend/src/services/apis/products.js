@@ -65,3 +65,10 @@ export const updateReviewAPI = (params) => {
         data: params,
     });
 };
+
+export const getProductsBySearchAPI = (params) => {
+    return baseTemplate({
+        method: "GET",
+        url: `/products/?search=${params.search}&page_no=${params.pageNo}`,
+    });
+};
