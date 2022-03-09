@@ -3,24 +3,39 @@ from accounts import serializers as accounts_serializers
 from products import models
 from products import serializers
 from rest_framework import authentication
+from rest_framework import filters
 from rest_framework import generics
 from rest_framework import pagination
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework import views
-from rest_framework import viewsets
 from rest_framework.response import Response
 
 
 class ProductPagination(pagination.PageNumberPagination):
     model = models.Product
-    page_size = 20
+    page_size = 12
 
 
-class ProductAPI(viewsets.ModelViewSet):
+class ProductAPI(generics.ListAPIView):
+    search_fields = [
+        "category",
+        "sub_category",
+        "short_title",
+        "long_title",
+        "description",
+        "selling_price",
+        "specification_title__title",
+    ]
+    filter_backends = (filters.SearchFilter,)
     serializer_class = serializers.ProductSerializer
-    queryset = models.Product.objects.all().order_by("?")
+    queryset = models.Product.objects.all()
     pagination_class = ProductPagination
+
+
+class SingleProductAPI(generics.RetrieveAPIView):
+    serializer_class = serializers.ProductSerializer
+    queryset = models.Product.objects.all()
 
 
 class WishlistProductAPI(generics.ListAPIView):

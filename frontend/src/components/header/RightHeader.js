@@ -1,6 +1,6 @@
 import { Context } from "App";
 import React from "react";
-import { Nav, Badge, FormControl, Button } from "react-bootstrap";
+import { Nav, Badge, Form, FormControl, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { isUserAuthenticated } from "services/apis/accounts";
 
@@ -14,6 +14,12 @@ function RightHeader() {
             history.push("/login");
         }
     };
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        history.push("/search/" + e.target.search.value);
+    };
+
     return (
         <Nav>
             {isUserAuthenticated() ? (
@@ -23,12 +29,14 @@ function RightHeader() {
             ) : (
                 <Nav.Link onClick={() => history.push("/products/compare")}>Compare</Nav.Link>
             )}
-            <Nav.Item className="ms-3" style={{ display: "flex" }}>
-                <FormControl type="text" name="search" placeholder="Search" />
+            <Nav.Item className="ms-3">
+                <Form className="d-flex" onSubmit={handleSearch}>
+                    <FormControl type="text" name="search" placeholder="Search" />
 
-                <Button className="ms-2" type="submit" variant="outline-success">
-                    Search
-                </Button>
+                    <Button className="ms-2" type="submit" variant="outline-success">
+                        Search
+                    </Button>
+                </Form>
             </Nav.Item>
         </Nav>
     );
