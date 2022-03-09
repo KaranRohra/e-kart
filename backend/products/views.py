@@ -14,7 +14,7 @@ from rest_framework.response import Response
 
 class ProductPagination(pagination.PageNumberPagination):
     model = models.Product
-    page_size = 20
+    page_size = 12
 
 
 class ProductAPI(generics.ListAPIView):
@@ -29,8 +29,13 @@ class ProductAPI(generics.ListAPIView):
     ]
     filter_backends = (filters.SearchFilter,)
     serializer_class = serializers.ProductSerializer
-    queryset = models.Product.objects.all().order_by("?")
+    queryset = models.Product.objects.all()
     pagination_class = ProductPagination
+
+
+class SingleProductAPI(generics.RetrieveAPIView):
+    serializer_class = serializers.ProductSerializer
+    queryset = models.Product.objects.all()
 
 
 class WishlistProductAPI(generics.ListAPIView):
